@@ -1,3 +1,5 @@
+git config --global core.filemode false
+
 
 # SETUP ZSH
 curl -L http://install.ohmyz.sh | sh

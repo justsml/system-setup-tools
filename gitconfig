@@ -1,5 +1,6 @@
 [core]
 	autocrlf = false
+	fileMode = false
 [push]
 	default = upstream
 [i18n]
@@ -33,7 +34,7 @@
 	co = checkout
 	b = create-branch
 	nb = checkout -b # Make a new branch - must supply new name
-	bl = branch --list -a
+	bla = branch --list -a
 	df = diff
 	lg = log -p
 	who = shortlog -s --

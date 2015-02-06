@@ -1,3 +1,6 @@
+# Performance profiling
+sudo apt-get install collectl
+
 # MongoDB @ v2.6.7
 sudo apt-get install -y mongodb-org=2.6.7 mongodb-org-server=2.6.7 mongodb-org-shell=2.6.7 mongodb-org-mongos=2.6.7 mongodb-org-tools=2.6.7
 
