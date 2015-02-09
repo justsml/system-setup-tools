@@ -13,7 +13,7 @@ chmod -c 770 *
 sudo ./summary
 sudo ./ioprofile -p 2263 -s 100
 # profile pid 2263 60 times, delayed by 10 sec
-sudo ./pmp  -p 2263 -i 60 -s 10
+sudo ./pmp  -p 31395 -i 120 -s 2
 
 sudo ./ioprofile -p 2263 -s 100
 ```
