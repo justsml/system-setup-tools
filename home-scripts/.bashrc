@@ -1,4 +1,5 @@
 # .bashrc
+export NODE_ENV=development
 
 # Colored prompt
 color_prompt=yes
@@ -25,6 +26,6 @@ shopt -s checkwinsize
 shopt -s globstar
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=2000
+HISTFILESIZE=4000
 
