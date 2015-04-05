@@ -1,17 +1,32 @@
+# Clear the terminal
+alias cls='clear'
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+# Bring harmony to the land
+alias node='node --harmony_arrow_functions'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+# monitor logs
+alias slog='sudo tail -100f /var/log/syslog'
+alias mlog='sudo tail -100f /var/log/messages'
+alias ips ='hostname --all-ip-addresses'
 
-# some more ls aliases
-alias ll='ls -lachF'
-alias la='ls -A'
-alias l='ls -CF'
+# List paths
+alias path='echo -e ${PATH//:/\\n}'
+
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ll='ls -lachF --color=always'
+alias la='ls -A --color=always'
+alias l='ls -CF --color=always'
+
+# Disk space in human
+alias df='df -h'
+alias du='du -h -c'
+alias dud='du --max-depth=1 -h -c'
+alias du1='du --max-depth=1 -h -c'
+alias du2='du --max-depth=2 -h -c'
+alias du3='du --max-depth=3 -h -c'
