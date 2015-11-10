@@ -9,6 +9,5 @@ sudo apt-get install git
 
 # Photo mgmt tools/suite (RAW files)
 sudo apt-get install exfat-fuse exfat-utils
-
 gem install jekyll
 

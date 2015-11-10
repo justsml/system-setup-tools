@@ -17,7 +17,11 @@ sudo apt-get install -y ttf-dejavu ttf-droid ttf-century-catalogue ttf-unifont  
 # sudo apt-get install -y nodejs vim-nox build-essential libssl-dev zlib1g-dev curl wget checkinstall cdbs \
 # 	devscripts dh-make fakeroot libxml-parser-perl check p7zip p7zip-rar zip unzip \
 # 	mongodb-org=2.6.7 mongodb-org-server=2.6.7 mongodb-org-shell=2.6.7 mongodb-org-mongos=2.6.7 mongodb-org-tools=2.6.7 \
+<<<<<<< HEAD
 # 	redis-server ttf-mscorefonts-installer ttf-dejavu ttf-droid ttf-opensymbol
+=======
+# 	redis-server ttf-mscorefonts-installer ttf-dejavu ttf-droid ttf-opensymbol 
+>>>>>>> 3eb37bf7798b1ffd573baaf6a4d137604020550b
 
 
 # # Setup latest docker

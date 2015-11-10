@@ -5,32 +5,31 @@ alias cls='clear'
 alias service-list="chkconfig --list | grep '3:on'"
 alias services-all="chkconfig --list | grep '3:on'"
 
+# Bring harmony to the land
+alias node='node --harmony --harmony_arrow_functions'
+
 # monitor logs
-alias slog='tail -200f /var/log/syslog'
-alias mlog='tail -200f /var/log/messages'
-alias ips='hostname --all-ip-addresses'
+alias slog='sudo tail -100f /var/log/syslog'
+alias mlog='sudo tail -100f /var/log/messages'
+alias ips ='hostname --all-ip-addresses'
 
-
-# List path
+# List paths
 alias path='echo -e ${PATH//:/\\n}'
 
-# searching & stuff
-alias grep='grep --color=always'
-alias fgrep='fgrep --color=always'
-alias egrep='egrep --color=always'
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
 
-# ls modifiers - should be more helpful to use ll or l now
-alias ls='ls --color=always'
-alias ll='ls -lach --color=always'
- alias l='ls -lach --color=always'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ll='ls -lachF --color=always'
 alias la='ls -A --color=always'
+alias l='ls -CF --color=always'
 alias lsbig='ls -lachS --color=always'
 alias lsnew='ls -lacht --color=always'
 
-alias dir='dir --color=always'
-alias vdir='vdir --color=always'
-
-# Disk space in human sizes, with sum total
+# Disk space in human terms
 alias df='df -h'
 alias du='du -h -c'
 alias dud='du --max-depth=1 -h -c'
