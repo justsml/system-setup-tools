@@ -1,0 +1,7 @@
+1. sudo vi /etc/rsyslog.conf
+2. Add  Under " RULES " Section
+
+# firewall logs, removed from /var/log/messages + kern.log
+:msg,contains,"UFW BLOCK" -/var/log/ufw-rsyslog.log
+:msg,contains,"UFW BLOCK" ~
+

@@ -1,0 +1,17 @@
+# Update old linux
+dpkg -i http://ftp.us.debian.org/debian/pool/main/o/openssh/openssh-server_6.0p1-4+deb7u2_amd64.deb
+
+wget http://ftp.ca.debian.org/debian/pool/main/o/openssl/openssl_1.0.1e-2+deb7u17_amd64.deb
+dpkg -i openssl_1.0.1e-2+deb7u17_amd64.deb
+wget http://ftp.hostserver.de/pub/OpenBSD/OpenSSH/portable/openssh-7.1p1.tar.gz
+tar xvf openssh-7.1p1.tar.gz
+cd openssh-7.1p1
+
+
+
+wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k.orig.tar.gz
+tar xvf openssl_1.0.1k.orig.tar.gz
+openssl-1.0.1k/
+./config
+make
+sudo make install

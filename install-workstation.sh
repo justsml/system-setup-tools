@@ -5,13 +5,10 @@ git config --global core.filemode false
 curl -L http://install.ohmyz.sh | sh
 
 
-sudo apt-get install git 
+sudo apt-get install git
 
 # Photo mgmt tools/suite (RAW files)
-sudo apt-get install darktable 
+sudo apt-get install exfat-fuse exfat-utils
 
-# TV MAXE
-sudo add-apt-repository ppa:venerix/pkg
-sudo apt-get update
-sudo apt-get install -y tv-maxe
+gem install jekyll
 
