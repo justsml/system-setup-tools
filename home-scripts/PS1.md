@@ -3,6 +3,7 @@
 ## Red HOST, GREEN fldr
 > PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;32m\] \W \$\[\033[00m\] '
 
+
 ## Red HOST, GREEN fldr name
 > PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
 
