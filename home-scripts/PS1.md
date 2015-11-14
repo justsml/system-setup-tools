@@ -17,11 +17,12 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 
 ## W/ User Name@Host - Full path (\W)
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
-RED:      [\033[01;31m\]
-GREEN:		[\033[01;32m\]
-YELLOW: 	[\033[01;33m\]
-BLUE:   	[\033[01;34m\]
-PURPLE: 	[\033[01;35m\]
-TEAL:   	[\033[01;36m\]
-WHITE:  	[\033[01;37m\]
+DARKYELLOW: [\033[01;29m\]
+GREY:       [\033[01;30m\]
+RED:        [\033[01;31m\]
+GREEN:		  [\033[01;32m\]
+YELLOW: 	  [\033[01;33m\]
+BLUE:   	  [\033[01;34m\]
+PURPLE: 	  [\033[01;35m\]
+TEAL:   	  [\033[01;36m\]
+WHITE:  	  [\033[01;37m\]
