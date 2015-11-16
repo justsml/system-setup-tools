@@ -10,7 +10,8 @@ function check_paths () {
 		printf "VIM: folder already exists      ~/.vim/colors\n"
 	fi
 
-	if [ ! -e ~/.vimrc ]; then
+	if [ ! -e "~/.vimrc" ]; then
+		touch ~/.vimrc
 		cat > "~/.vimrc" <<-'EOF'
 			syntax on
 			colorscheme desert
