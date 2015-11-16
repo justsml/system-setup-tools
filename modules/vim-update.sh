@@ -16,9 +16,9 @@ function check_paths () {
 			syntax on
 			colorscheme desert
 		EOF
-		printf "VIM: created file             ~/.vimrc\n"
+		printf "VIM: created file               ~/.vimrc\n"
 	else
-		printf "VIM: file already exists      ~/.vimrc\n"
+		printf "VIM: file already exists        ~/.vimrc\n"
 	fi
 }
 
@@ -39,15 +39,15 @@ function get_themes () {
 function vim_check () {
 	is_installed=$(dpkg --status vim-nox | grep 'Status:.*install')
 	if [ ! -e /etc/debian_version ]; then
-		printf "UNSUPPORTED: Only debian-based platforms supported\n"
+		printf "\nUNSUPPORTED: Currently only debian-base supported\n\n"
 		sleep 3s
 		exit -99
 	fi
 
 	if [[ $is_installed =~ "install" ]]; then
-		printf "VIM: Success: vim-nox package already installed\n"
+		printf "VIM: Success: vim-nox package already installed\n\n\n"
 	else
-		printf "VIM: installing needed packages: vim-nox\n"
+		printf "VIM: installing needed packages: vim-nox\n\n\n"
 		sudo apt-get update && apt-get install -y vim-nox wget
 	fi
 }
