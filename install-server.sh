@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 # Performance profiling
 sudo apt-get update && \
   apt-get install -y collectl
@@ -18,6 +21,15 @@ sudo /usr/bin/mysql_secure_installation
 # Java, if needed
 # sudo apt-get update && \
 #  apt-get install -y openjdk-7-jdk openjdk-7-jre icedtea-7-plugin
+
+
+if [[ $(cat /etc/sysctl.conf | grep max_user_watches) == "" ]]; then
+  printf "NOTICE: Patching sysctl.conf ...\n"
+  sudo sh -c 'echo fs.inotify.max_user_watches=1048576 >> /etc/sysctl.conf'
+else
+  printf "Info: sysctl already patched.\n"
+fi
+
 
 # Add Repos For debian 8 / jessie
 echo 'deb http://httpredir.debian.org/debian jessie main contrib non-free' > /etc/apt/sources.list
@@ -48,11 +60,10 @@ sudo apt-get update && \
 #And everything now...
 sudo apt-get update && \
   apt-get install -y nodejs vim-nox build-essential libssl-dev zlib1g-dev curl wget checkinstall cdbs \
-
 devscripts dh-make fakeroot libxml-parser-perl check \
 p7zip p7zip-rar zip unzip \
 redis-server ttf-mscorefonts-installer ttf-dejavu fonts-droid fonts-opensymbol \
-mongodb-org=3.0.3 mongodb-org-server=3.0.3 mongodb-org-shell=3.0.3 mongodb-org-mongos=3.0.3 mongodb-org-tools=3.0.3
+mongodb-org=3.2.0 mongodb-org-server=3.2.0 mongodb-org-shell=3.2.0 mongodb-org-mongos=3.2.0 mongodb-org-tools=3.2.0
 
 
 # Setup latest docker
@@ -73,7 +84,7 @@ sudo apt-get install -y ttf-dejavu fonts-droid ttf-droid ttf-century-catalogue t
 sudo apt-get install -y nodejs vim-nox build-essential libssl-dev zlib1g-dev curl wget checkinstall cdbs \
 devscripts dh-make fakeroot libxml-parser-perl check p7zip p7zip-rar zip unzip \
 redis-server ttf-mscorefonts-installer ttf-dejavu fonts-droid fonts-opensymbol \
-mongodb-org=2.6.8 mongodb-org-server=2.6.8 mongodb-org-shell=2.6.8 mongodb-org-mongos=2.6.8 mongodb-org-tools=2.6.8
+mongodb-org=3.2.0 mongodb-org-server=3.2.0 mongodb-org-shell=3.2.0 mongodb-org-mongos=3.2.0 mongodb-org-tools=3.2.0
 
 
 # Setup latest docker

@@ -4,7 +4,7 @@ set -e
 
 function check_paths () {
 	if [ ! -d ~/.vim/colors ]; then
-		mkdir ~/.vim/colors
+		mkdir -p ~/.vim/colors
 		printf "VIM: created folder             ~/.vim/colors\n"
 	else
 		printf "VIM: folder already exists      ~/.vim/colors\n"
