@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export TOOLS_URI=https://raw.githubusercontent.com/justsml/system-setup-tools
+
+
 set -e
 
 

@@ -66,7 +66,7 @@ plugins=(git docker python grunt gulp nmap git-extras ssh-agent debian)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/go/bin:/home/dan/.nimble/bin:/usr/local/share/scala/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/go/bin:/home/dan/.nimble/bin:/usr/local/share/scala/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 # /usr/local/nvm/versions/node/v0.12.4/bin:
 
