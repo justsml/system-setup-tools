@@ -3,6 +3,7 @@
 # wget http://ftp.ca.debian.org/debian/pool/main/o/openssl/openssl_1.0.1e-2+deb7u17_amd64.deb
 # dpkg -i openssl_1.0.1e-2+deb7u17_amd64.deb
 
+cd ~/
 wget http://ftp.hostserver.de/pub/OpenBSD/OpenSSH/portable/openssh-7.1p1.tar.gz
 tar xvf openssh-7.1p1.tar.gz
 cd openssh-7.1p1
@@ -11,9 +12,10 @@ make
 sudo make install
 
 
+cd ~/
 wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k.orig.tar.gz
 tar xvf openssl_1.0.1k.orig.tar.gz
-openssl-1.0.1k/
+cd openssl-1.0.1k/
 ./config
 make
 sudo make install
