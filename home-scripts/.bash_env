@@ -1,0 +1,5 @@
+#/usr/bin
+
+export NODE_ENV=development
+export RACK_ENV=development
+

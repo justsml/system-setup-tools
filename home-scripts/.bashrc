@@ -1,8 +1,6 @@
 # .bashrc
-export NODE_ENV=development
 
-
-# Colored prompt
+# Color prompt
 color_prompt=yes
 force_color_prompt=yes
 if [ "$color_prompt" = "yes" ]; then
@@ -35,7 +33,10 @@ fi
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTCONTROL=ignoredups
+HISTSIZE=2000
+HISTFILESIZE=4000
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -48,8 +49,4 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 # DON'T ENABLE - ** NEEDS TO BE RECURSIVE
 # shopt -s globstar
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=2000
-HISTFILESIZE=4000
 

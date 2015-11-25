@@ -13,9 +13,34 @@ sudo make install
 
 
 cd ~/
+wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k-3+deb8u1_amd64.deb
+wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k-3+deb8u1.dsc
+
 wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k.orig.tar.gz
 tar xvf openssl_1.0.1k.orig.tar.gz
 cd openssl-1.0.1k/
 ./config
 make
 sudo make install
+
+
+
+cd ~/
+wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.19.tar.bz2
+wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.19.tar.bz2.sig
+tar xvf gnupg-1.4.19.tar.bz2
+cd gnupg-1.4.19/
+./configure
+make
+sudo make install
+
+
+cd ~/
+wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2
+wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2.sig
+tar xvf gnupg-2.1.9.tar.bz2
+cd gnupg-2.1.9/
+./configure
+make
+sudo make install
+
