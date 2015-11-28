@@ -35,12 +35,17 @@ make
 sudo make install
 
 
-cd ~/
-wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2
-wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2.sig
-tar xvf gnupg-2.1.9.tar.bz2
-cd gnupg-2.1.9/
-./configure
-make
-sudo make install
+
+function install_gnupg2 () {
+  sudo apt-get install libassuan-dev gnutls-dev npth*-dev libksba-dev
+
+  cd ~/
+  wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2
+  wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2.sig
+  tar xvf gnupg-2.1.9.tar.bz2
+  cd gnupg-2.1.9/
+  ./configure
+  make
+  sudo make install
+}
 
