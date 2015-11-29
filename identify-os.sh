@@ -34,6 +34,9 @@ fi
 
 lsb_dist="$(echo "$lsb_dist" | tr '[:upper:]' '[:lower:]')"
 
-echo $lsb_dist
+identify_os() {
+  echo $lsb_dist
+}
+
 
 
