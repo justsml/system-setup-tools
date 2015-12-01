@@ -5,17 +5,17 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="jonathan"
-ZSH_THEME="agnoster"
-ZSH_THEME="jonathan"
+# ZSH_THEME="jonathan"
+# ZSH_THEME="agnoster"
+# ZSH_THEME="jonathan"
 ZSH_THEME="emotty"
-ZSH_THEME="smt"
-ZSH_THEME="simonoff"
-ZSH_THEME="dogenpunk"
-ZSH_THEME="Soliah"
-ZSH_THEME="pure"
-ZSH_THEME="trapd00r"
-ZSH_THEME="bureau"
+# ZSH_THEME="smt"
+# ZSH_THEME="simonoff"
+# ZSH_THEME="dogenpunk"
+# ZSH_THEME="Soliah"
+# ZSH_THEME="pure"
+# ZSH_THEME="trapd00r"
+# ZSH_THEME="bureau"
 # ZSH_THEME="avit"
 
 # "robbyrussell"
