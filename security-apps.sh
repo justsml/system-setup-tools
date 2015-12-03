@@ -8,7 +8,7 @@
 # Virus Scanning
 sudo apt-get update && apt-get install -y clamav clamav-daemon clamav-freshclam
 # firewall, sec related apps
-sudo apt-get update && apt-get install ufw fail2ban psad
+sudo apt-get update && apt-get install -y ufw fail2ban #psad
 # intrusion detection
 sudo apt-get update && apt-get install aide
 # Update
