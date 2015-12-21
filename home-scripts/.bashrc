@@ -1,4 +1,13 @@
-# .bashrc
+#!/bin/bash
+# dan's .bashrc file -
+# Automation: http://www.danlevy.net/2015/04/06/docker-server-setup-notes/
+# Source:     https://github.com/justsml/system-setup-tools/home-scripts/.bashrc
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -75,7 +84,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#export NVM_DIR="/home/dan/.nvm"
 # Global Install Now! 2015-05-10
 export NVM_DIR="/usr/local/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
