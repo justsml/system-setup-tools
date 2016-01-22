@@ -19,12 +19,12 @@ function get_dot_files () {
 }
 
 if [[ ! -d ~/.oh-my-zsh ]]; then
-  setup ()
+  setup
 fi
 if [[ -e "$HOME/.zsh_aliases" ]]; then
   . "$HOME/.zsh_aliases"
 elif [[ -e "$HOME/.bash_aliases" ]]; then
   . "$HOME/.bash_aliases"
 else
-  get_dot_files ()
+  get_dot_files
 fi
