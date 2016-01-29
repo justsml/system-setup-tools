@@ -27,4 +27,4 @@ ufw allow out on docker0 to any port 443 proto tcp
 # (e.g. use your current ISP given IP or other orchestrator host IP)
 [ -n "$REMOTE_IP" ] && ufw allow proto tcp from $REMOTE_IP to any port 2376
 
-ufw enable
+ufw --force enable
