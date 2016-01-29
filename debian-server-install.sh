@@ -14,3 +14,15 @@ sudo apt-get update && \
     libsqlite3-dev libfontconfig1-dev libicu-dev libfreetype6 \
     libpng-dev libjpeg-dev libx11-dev libxext-dev \
     ttf-freefont ttf-mscorefonts-installer ttf-bitstream-vera ttf-dejavu ttf-liberation
+
+# Install VI Prefs - Recommended - Optional
+curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/vim-update.sh | sudo bash
+
+# Backup Profile init scripts before appending new scripts below
+mkdir ~/backups
+cp ~/.bash* ~/backups/
+# Debian/BSD:  Append Shell Environment Shortcuts + XTERM Colors
+curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc > ~/.bashrc
+curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases > ~/.bash_aliases
+# Read into current shell (login steps already missed the aliases file)
+source ~/.bashrc
