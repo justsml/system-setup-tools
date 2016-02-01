@@ -1,7 +1,7 @@
 #!/bin/bash
 # On fresh debian 8 - run this
 apt-get update
-apt-get install sudo
+apt-get install -y sudo curl
 echo 'deb http://httpredir.debian.org/debian jessie main contrib non-free' > /etc/apt/sources.list
 echo 'deb http://httpredir.debian.org/debian jessie-updates main contrib non-free' >> /etc/apt/sources.list
 echo 'deb http://security.debian.org jessie/updates main contrib non-free' >> /etc/apt/sources.list
