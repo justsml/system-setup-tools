@@ -1,51 +1,30 @@
-# Update old linux
-
-# wget http://ftp.ca.debian.org/debian/pool/main/o/openssl/openssl_1.0.1e-2+deb7u17_amd64.deb
-# dpkg -i openssl_1.0.1e-2+deb7u17_amd64.deb
+# Update old linux Security Packages 
+## Some release channels aren't updated, ...
+## So, for the important un-upgradable servers, use this update script
 
 cd ~/
-wget http://ftp.hostserver.de/pub/OpenBSD/OpenSSH/portable/openssh-7.1p1.tar.gz
-tar xvf openssh-7.1p1.tar.gz
-cd openssh-7.1p1
+wget http://ftp3.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.1p2.tar.gz
+tar xvf openssh-7.1p2.tar.gz
+cd openssh-7.1p2
 ./configure
 make
 sudo make install
 
-
 cd ~/
-wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k-3+deb8u1_amd64.deb
-wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k-3+deb8u1.dsc
-
-wget http://http.debian.net/debian/pool/main/o/openssl/openssl_1.0.1k.orig.tar.gz
-tar xvf openssl_1.0.1k.orig.tar.gz
-cd openssl-1.0.1k/
+wget https://www.openssl.org/source/openssl-1.0.1r.tar.gz
+tar xvf openssl-1.0.1r.tar.gz
+cd openssl-1.0.1r/
 ./config
 make
 sudo make install
 
-
-
 cd ~/
-wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.19.tar.bz2
-wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.19.tar.bz2.sig
-tar xvf gnupg-1.4.19.tar.bz2
-cd gnupg-1.4.19/
+wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.20.tar.bz2
+wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.20.tar.bz2.sig
+tar xvf gnupg-1.4.20.tar.bz2
+cd gnupg-1.4.20/
 ./configure
 make
 sudo make install
 
-
-
-function install_gnupg2 () {
-  sudo apt-get install libassuan-dev gnutls-dev npth*-dev libksba-dev
-
-  cd ~/
-  wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2
-  wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.1.9.tar.bz2.sig
-  tar xvf gnupg-2.1.9.tar.bz2
-  cd gnupg-2.1.9/
-  ./configure
-  make
-  sudo make install
-}
-
+#  sudo apt-get install libassuan-dev gnutls-dev npth*-dev libksba-dev
