@@ -2,11 +2,16 @@
 ## Some release channels aren't updated, ...
 ## So, for the important un-upgradable servers, use this update script
 
+echo CHECK THE CONFIG PREFIX PARAMS !!!!
+sleep 30s
+echo SERIOUSLY, DID YOU CHECK CONFIG PREFIX PARAMS???? 
+sleep 30s
+
 cd ~/
 wget http://ftp3.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.1p2.tar.gz
 tar xvf openssh-7.1p2.tar.gz
 cd openssh-7.1p2
-./configure
+./configure --prefix=/usr
 make
 sudo make install
 
@@ -14,7 +19,7 @@ cd ~/
 wget https://www.openssl.org/source/openssl-1.0.1r.tar.gz
 tar xvf openssl-1.0.1r.tar.gz
 cd openssl-1.0.1r/
-./config
+./config --openssldir=/usr/bin
 make
 sudo make install
 
@@ -23,7 +28,7 @@ wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.20.tar.bz2
 wget https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.20.tar.bz2.sig
 tar xvf gnupg-1.4.20.tar.bz2
 cd gnupg-1.4.20/
-./configure
+./configure --prefix=/usr
 make
 sudo make install
 
