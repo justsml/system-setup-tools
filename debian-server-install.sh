@@ -1,7 +1,10 @@
 #!/bin/bash
-# On fresh debian 8 - run this
+
+# On fresh busybox or debian 8 - run the following manually:
 apt-get update
 apt-get install -y sudo curl
+# After ^^^ -> this script can be run with: 
+# curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/debian-server-install.sh | bash
 
 echo 'deb http://httpredir.debian.org/debian jessie main contrib non-free' > /etc/apt/sources.list
 echo 'deb http://httpredir.debian.org/debian jessie-updates main contrib non-free' >> /etc/apt/sources.list
