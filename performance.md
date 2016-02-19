@@ -2,6 +2,10 @@
 # System Summary & Profiling Tools
 
 ```bash
+# for debian flavors, needs strace
+apt-get update && apt-get install strace
+
+
 mkdir ~/profiling
 cd ~/profiling
 wget http://aspersa.googlecode.com/svn/trunk/align # eg: align vmstat
