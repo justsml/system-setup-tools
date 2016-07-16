@@ -49,6 +49,28 @@ alias du1='du --max-depth=1 -h -c'
 alias du2='du --max-depth=2 -h -c'
 alias du3='du --max-depth=3 -h -c'
 
-
-# Clear the terminal
+# Old Misc Polyfills 
 alias cls='clear'
+
+# *** Add Named Colors 
+# (credit: SiegeX - http://stackoverflow.com/questions/4332478/read-the-current-text-color-in-a-xterm/4332530#4332530 )
+#   Examples: 
+#     printf "%40s\n" "${BLUE}This text is blue${NORMAL}"
+#     echo "${RED}this is red ${NORMAL}this is normal
+BLACK=$(tput setaf 0)
+BLUE=$(tput setaf 4)
+BRIGHT=$(tput bold)
+CYAN=$(tput setaf 6)
+GREEN=$(tput setaf 2)
+LIME_YELLOW=$(tput setaf 190)
+MAGENTA=$(tput setaf 5)
+NORMAL=$(tput sgr0)
+POWDER_BLUE=$(tput setaf 153)
+RED=$(tput setaf 1)
+WHITE=$(tput setaf 7)
+YELLOW=$(tput setaf 3)
+
+BLINK=$(tput blink)
+REVERSE=$(tput smso)
+UNDERLINE=$(tput smul)
+
