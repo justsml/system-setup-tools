@@ -1,14 +1,21 @@
+### DAN'S SHELL ALIASES FILE ###
+# Tested on: Debian/Ubuntu, Fedora, Mac OSX
+# Source: https://github.com/justsml/system-setup-tools/edit/master/home-scripts/.bash_aliases
+# Note: Must be added to run from your profile/rc script `.bashrc` or `.profile` or whatever your OS uses.
+
+# Add next line to `~/.bashrc` 
+# [ -f ~/.bash_aliases ] && source ~/.bash_aliases || echo "Startup Warning: Cannot find expected ~/.bash_aliases file."
 
 # ** Rsync copy preserve-Attribs, Recursive, w/ Progress
 alias cpsync='rsync -WarP'
 alias copy='rsync -WarP'
 
-# *** list startup services
+# *** list startup services - No Mac Support. launchctrl. pffff.
 alias service-list="chkconfig --list | grep '3:on'"
 alias services-all="chkconfig --list | grep '3:on'"
 
-# *** Bring harmony to the lands
-alias node='node  --harmony --harmony_modules --harmony_sloppy_function --harmony_sloppy_let --harmony_arrow_functions --harmony_default_parameters --harmony_destructuring'
+# *** Bring es6-ish harmony to the lands
+alias node='node --harmony --harmony_modules --harmony_sloppy_function --harmony_sloppy_let --harmony_arrow_functions --harmony_default_parameters --harmony_destructuring'
 
 # ** monitor logs
 alias alog='sudo tail -500f /var/log/auth.log'
@@ -26,28 +33,20 @@ alias ips='hostname --all-ip-addresses'
 # ** List paths
 alias path='echo -e ${PATH//:/\\n}'
 
-# Turn color on if we can
-alias ls='ls --color=auto'
-alias dir='dir --color=auto'
-alias vdir='vdir --color=auto'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
 # *** Extend gnu cmds
-alias ll='ls -lachF --color=always'
-alias la='ls -A --color=always'
-alias l='ls -CF --color=always'
-alias lsbig='ls -lachS --color=always'
-alias lsnew='ls -lacht --color=always'
+alias ll='ls -lachF'
+alias la='ls -A'
+alias l='ls -C'
+alias lsbig='ls -lachS'
+alias lsnew='ls -lacht'
 
 # *** Disk space in human terms
 alias df='df -h'
-alias du='du -h -c'
-alias dud='du --max-depth=1 -h -c'
-alias du1='du --max-depth=1 -h -c'
-alias du2='du --max-depth=2 -h -c'
-alias du3='du --max-depth=3 -h -c'
+alias du='du -h -c -x'
+alias dud='du -d 1 -h -c -x'
+alias du1='du -d 1 -h -c -x'
+alias du2='du -d 2 -h -c -x'
+alias du3='du -d 3 -h -c -x'
 
 # Old Misc Polyfills 
 alias cls='clear'
@@ -69,8 +68,10 @@ POWDER_BLUE=$(tput setaf 153)
 RED=$(tput setaf 1)
 WHITE=$(tput setaf 7)
 YELLOW=$(tput setaf 3)
-
+# Font styles:
 BLINK=$(tput blink)
 REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
+
+### === END DAN'S ALIASES === ###
 
