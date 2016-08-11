@@ -54,8 +54,23 @@
 	recommit = commit --amend 		# Amend prev commit with latest changes
 	undo = reset --soft HEAD~1 
 	ribbon = tag --force _ribbon origin/master
-	catchup = log --patch --reverse --topo-order _ribbon..origin/master
+  catchup = log --patch --reverse --topo-order _ribbon..origin/master
 
+  graph-tiny = log --graph -14 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+  graph-long = log --graph -60 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+  graph      = log --graph -30 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+
+  unstage = reset -q HEAD --
+  discard = checkout --
+  uncommit = reset --mixed HEAD~
+  amend = commit --amend
+  nevermind = !git reset --hard HEAD && git clean -d -f
+  precommit = diff --cached --diff-algorithm=minimal -w
+
+[transfer]
+# fsckobjects = true # recommended
+[receive]
+# fsckObjects = true # recommended
 
 
 
