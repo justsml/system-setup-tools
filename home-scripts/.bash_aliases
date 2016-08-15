@@ -1,4 +1,6 @@
 #!/bin/bash
+# To Debug: set -x
+set -e
 
 ### DAN'S SHELL ALIASES FILE ###
 # Tested on: Debian/Ubuntu, Fedora, Mac OSX
@@ -6,11 +8,11 @@
 # Note: Must be added to run from your profile/rc script `.bashrc` or `.profile` or whatever your OS uses.
 
 
-# INSTALL: 
+# INSTALL:
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
 
 
-# Add next line to `~/.bashrc` 
+# Add next line to `~/.bashrc`
 # [ -f ~/.bash_aliases ] && source ~/.bash_aliases || echo "Startup Warning: Cannot find expected ~/.bash_aliases file."
 
 KERNEL_NAME="$(uname -s)"
@@ -18,16 +20,16 @@ KERNEL_NAME="$(uname -s)"
 
 ## Helper Functions  --- Aliases Below ##
 function get_env_label () {
-  ### Get Env Name - uses first val: 
+  ### Get Env Name - uses first val:
   # VALID ENV's: [production, staging, test, qa, development] - Default = development
-  ENV_NAME=${ENV_NAME:=$RUBY_ENV}     # Check RUBY
+  ENV_NAME=$RUBY_ENV     # Check RUBY
   ENV_NAME=${ENV_NAME:=$RACK_ENV}     # Check RACK
   ENV_NAME=${ENV_NAME:=$RUST_ENV}     # Check NODE
   ENV_NAME=${ENV_NAME:=$NODE_ENV}     # Check NODE
   ENV_NAME=${ENV_NAME:=$PHP_ENV}      # Check Phfffp
   ENV_NAME=${ENV_NAME:=$GO_ENV}       # Check GO
   ENV_NAME=${ENV_NAME:="development"} # Fallback to 'development'
-  
+
   # TRANSFORM INTO DISPLAY VALUE
   [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="${RED}[LIVE]  "
   [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="${MAGENTA}DEV     "
@@ -35,7 +37,7 @@ function get_env_label () {
   [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="${CYAN}TEST    "
   [[ "$ENV_NAME" =~ ^"qa".* ]]   && ENV_LABEL="${POWDER_BLUE}QA      "
   export ENV_LABEL="$ENV_LABEL"
-  return $ENV_LABEL
+  #return $ENV_LABEL
 }
 
 
@@ -53,8 +55,8 @@ fi
 
 # *** Brings harmony to the lands (remove for old node versions)
 NODE_VER="$(node -v 2>/dev/null)"
-if [[ $NODE_VER =~ "(v6|v7|v8)" ]]; then 
-  # No alias needed? 
+if [[ $NODE_VER =~ "(v6|v7|v8)" ]]; then
+  # No alias needed?
   # Node version is new enough, some (or most) ES6/harmony features available...
   alias node='node --harmony --harmony_modules --harmony_sloppy_function --harmony_default_parameters'
 else
@@ -76,7 +78,7 @@ if [[ OSX == "true" ]]; then
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2"
 else
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print $2}' | sed s/addr://"
-fi 
+fi
 
 # ** List paths
 alias path='echo -e ${PATH//:/\\n}'
@@ -98,12 +100,12 @@ alias du1='du -d 1 -h -c -x'
 alias du2='du -d 2 -h -c -x'
 alias du3='du -d 3 -h -c -x'
 
-# Old Misc Polyfills 
+# Old Misc Polyfills
 alias cls='clear'
 
-# *** Add Named Colors 
+# *** Add Named Colors
 # (credit: SiegeX - http://stackoverflow.com/questions/4332478/read-the-current-text-color-in-a-xterm/4332530#4332530 )
-#   Examples: 
+#   Examples:
 #     printf "%40s\n" "${BLUE}This text is blue${NORMAL}"
 #     echo "${RED}this is red ${NORMAL}this is normal"
 BLACK=$(tput setaf 0)
@@ -124,22 +126,25 @@ REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
 function set_env_label () {
-  ### Get Env Name - uses first val: 
+  ### Get Env Name - uses first val:
   # VALID ENV's: [production, staging, test, qa, development] - Default = development
-  ENV_NAME=${ENV_NAME:=$RUBY_ENV}     # Check RUBY
+  ENV_NAME=$RUBY_ENV     # Check RUBY
   ENV_NAME=${ENV_NAME:=$RACK_ENV}     # Check RACK
   ENV_NAME=${ENV_NAME:=$NODE_ENV}     # Check NODE
   ENV_NAME=${ENV_NAME:=$PHP_ENV}      # Check Phfffp
   ENV_NAME=${ENV_NAME:=$GO_ENV}       # Check GO
   ENV_NAME=${ENV_NAME-"development"}  # Fallback to 'development'
-  
-  # TRANSFORM INTO DISPLAY VALUE
+
+  printf "\n\n\t****\nENV_NAME: $ENV_NAME\n\n"
+
+# TRANSFORM INTO DISPLAY VALUE
   [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="[LIVE]  " && ENV_LABEL="${RED}$ENV_LABEL"
   [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="DEV     " && ENV_LABEL="${MAGENTA}$ENV_LABEL"
   [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="STAGING " && ENV_LABEL="${LIME_YELLOW}$ENV_LABEL"
   [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="TEST    " && ENV_LABEL="${CYAN}$ENV_LABEL"
   [[ "$ENV_NAME" =~ ^"qa".*  ]]  && ENV_LABEL="QA      " && ENV_LABEL="${POWDER_BLUE}$ENV_LABEL"
-  return $ENV_LABEL
+  export ENV_NAME="$ENV_NAME"
+  export ENV_LABEL="$ENV_LABEL"
 }
 
 function set_shell_prompt () {
@@ -148,7 +153,7 @@ function set_shell_prompt () {
   if [[ "$UID" == "0" ]]; then
     # So, we's root
     # Prior ver: export PS1="\[\e[31m\]$ENV_NAME\[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-    export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE} :: ${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
+    export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE}: ${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   else
     export PS1="${CYAN}$ENV_LABEL${BRIGHT} :: ${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   fi
@@ -160,4 +165,3 @@ set_shell_prompt
 
 
 ### === END DAN'S ALIASES === ###
-
