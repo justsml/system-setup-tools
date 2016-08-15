@@ -1,13 +1,20 @@
+#!/bin/bash
+
 ### DAN'S SHELL ALIASES FILE ###
 # Tested on: Debian/Ubuntu, Fedora, Mac OSX
 # Source: https://github.com/justsml/system-setup-tools/edit/master/home-scripts/.bash_aliases
 # Note: Must be added to run from your profile/rc script `.bashrc` or `.profile` or whatever your OS uses.
 
+
+# INSTALL: 
+# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
+
+
 # Add next line to `~/.bashrc` 
 # [ -f ~/.bash_aliases ] && source ~/.bash_aliases || echo "Startup Warning: Cannot find expected ~/.bash_aliases file."
 
 KERNEL_NAME="$(uname -s)"
-[[ $KERNEL_NAME =~ ^"Darwin" ]] && OSX=true || OSX=false
+[[ $KERNEL_NAME =~ ^"Darwin" ]] && OSX="true" || OSX="false"
 
 ## Helper Functions  --- Aliases Below ##
 function get_env_label () {
@@ -44,10 +51,12 @@ if [[ -f "$(which chkconfig)" ]]; then
   alias services-all="chkconfig --list | grep '3:on'"
 fi
 
-# *** Bringes6-ish harmony to the lands (remove for old node versions)
+# *** Brings harmony to the lands (remove for old node versions)
 NODE_VER="$(node -v 2>/dev/null)"
-if [[ $NODE_VER =~ ^(v5|v6|v7|v8) ]] then 
-  # No alias needed: Node version is new enough, some (or most) ES6/harmony features available...
+if [[ $NODE_VER =~ "(v6|v7|v8)" ]]; then 
+  # No alias needed? 
+  # Node version is new enough, some (or most) ES6/harmony features available...
+  alias node='node --harmony --harmony_modules --harmony_sloppy_function --harmony_default_parameters'
 else
   alias node='node --harmony --harmony_modules --harmony_sloppy_function --harmony_sloppy_let --harmony_arrow_functions --harmony_default_parameters --harmony_destructuring'
 fi
@@ -63,7 +72,11 @@ alias ports-open='netstat -pawnt | grep LISTEN'
 alias ports-active='netstat -pawnt | grep ESTABLISHED'
 
 # ** List all IP addresses
-alias ips="ifconfig | grep 'inet ' | awk '{ print $2; }'"
+if [[ OSX == "true" ]]; then
+  alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2"
+else
+  alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print $2}' | sed s/addr://"
+fi 
 
 # ** List paths
 alias path='echo -e ${PATH//:/\\n}'
@@ -73,7 +86,9 @@ alias ll='ls -lachF'
 alias la='ls -A'
 alias l='ls -C'
 alias lsbig='ls -lachS'
+alias lss='lsbig'
 alias lsnew='ls -lacht'
+alias lt='lsnew'
 
 # *** Disk space in human terms
 alias df='df -h'
