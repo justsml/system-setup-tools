@@ -1,9 +1,10 @@
 #!/bin/bash
-# To Debug: set -x
-set -e
+# To Debug:          set -x
+# To Fail on Errors: set -e
 
-### DAN'S SHELL ALIASES FILE ###
-# Tested on: Debian/Ubuntu, Fedora, Mac OSX
+#############################################
+### DAN'S SHELL ALIASES FILE ################
+# Tested on: Debian/Ubuntu, Fedora, Mac OSX #
 # Source: https://github.com/justsml/system-setup-tools/edit/master/home-scripts/.bash_aliases
 # Note: Must be added to run from your profile/rc script `.bashrc` or `.profile` or whatever your OS uses.
 
@@ -17,28 +18,6 @@ set -e
 
 KERNEL_NAME="$(uname -s)"
 [[ $KERNEL_NAME =~ ^"Darwin" ]] && OSX="true" || OSX="false"
-
-## Helper Functions  --- Aliases Below ##
-function get_env_label () {
-  ### Get Env Name - uses first val:
-  # VALID ENV's: [production, staging, test, qa, development] - Default = development
-  ENV_NAME=$RUBY_ENV     # Check RUBY
-  ENV_NAME=${ENV_NAME:=$RACK_ENV}     # Check RACK
-  ENV_NAME=${ENV_NAME:=$RUST_ENV}     # Check NODE
-  ENV_NAME=${ENV_NAME:=$NODE_ENV}     # Check NODE
-  ENV_NAME=${ENV_NAME:=$PHP_ENV}      # Check Phfffp
-  ENV_NAME=${ENV_NAME:=$GO_ENV}       # Check GO
-  ENV_NAME=${ENV_NAME:="development"} # Fallback to 'development'
-
-  # TRANSFORM INTO DISPLAY VALUE
-  [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="${RED}[LIVE]  "
-  [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="${MAGENTA}DEV     "
-  [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="${LIME_YELLOW}STAGING "
-  [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="${CYAN}TEST    "
-  [[ "$ENV_NAME" =~ ^"qa".* ]]   && ENV_LABEL="${POWDER_BLUE}QA      "
-  export ENV_LABEL="$ENV_LABEL"
-  #return $ENV_LABEL
-}
 
 
 #### MAIN ALIASES ####
@@ -150,7 +129,10 @@ function set_env_label () {
 function set_shell_prompt () {
   ## e.g. export PS1="${CYAN}$ENV_LABEL${BRIGHT} :: ${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   ### *** SHELL PROMPT COLOR (root & non-root)
-  if [[ "$UID" == "0" ]]; then
+  if [[ "$OSX" == "true" ]]; then
+    # export PS1="${GREEN} \h ${NORMAL} : ${YELLOW}\W ${MAGENTA}\u\$${NORMAL} "
+    export PS1="${MAGENTA}$USER${RED}@${YELLOW}$(hostname)${NORMAL}: ${BLUE}$(basename $PWD)/${NORMAL}${BRIGHT} # ${NORMAL} "
+  elif [[ "$UID" == "0" ]]; then
     # So, we's root
     # Prior ver: export PS1="\[\e[31m\]$ENV_NAME\[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
     export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE}: ${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
@@ -159,9 +141,36 @@ function set_shell_prompt () {
   fi
 }
 
-set_env_label
 
+
+## Run this town... code!
+set_env_label
 set_shell_prompt
 
 
+
+
+## Helper Functions ##
+function get_env_label () {
+  ### Get Env Name - uses first val:
+  # VALID ENV's: [production, staging, test, qa, development] - Default = development
+  ENV_NAME=$RUBY_ENV     # Check RUBY
+  ENV_NAME=${ENV_NAME:=$RACK_ENV}     # Check RACK
+  ENV_NAME=${ENV_NAME:=$RUST_ENV}     # Check NODE
+  ENV_NAME=${ENV_NAME:=$NODE_ENV}     # Check NODE
+  ENV_NAME=${ENV_NAME:=$PHP_ENV}      # Check Phfffp
+  ENV_NAME=${ENV_NAME:=$GO_ENV}       # Check GO
+  ENV_NAME=${ENV_NAME:="development"} # Fallback to 'development'
+
+  # TRANSFORM INTO DISPLAY VALUE
+  [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="${RED}[LIVE] "
+  [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="${MAGENTA}DEV "
+  [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="${LIME_YELLOW}PRE "
+  [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="${CYAN}TEST "
+  [[ "$ENV_NAME" =~ ^"qa".* ]]   && ENV_LABEL="${POWDER_BLUE}QA "
+  export ENV_LABEL="$ENV_LABEL"
+  #return $ENV_LABEL
+}
+
 ### === END DAN'S ALIASES === ###
+
