@@ -27,7 +27,7 @@ alias cpsync='rsync -WarP'
 alias copy='rsync -WarP'
 
 # *** list startup services - No Mac Support. launchctrl. pffff.
-if [[ -f "$(which chkconfig)" ]]; then
+if [[ -f "$(which chkconfig 2>/dev/null)" ]]; then
   alias service-list="chkconfig --list | grep '3:on'"
   alias services-all="chkconfig --list | grep '3:on'"
 fi
@@ -108,20 +108,21 @@ function set_env_label () {
   ### Get Env Name - uses first val:
   # VALID ENV's: [production, staging, test, qa, development] - Default = development
   ENV_NAME=$RUBY_ENV     # Check RUBY
-  ENV_NAME=${ENV_NAME:=$RACK_ENV}     # Check RACK
-  ENV_NAME=${ENV_NAME:=$NODE_ENV}     # Check NODE
-  ENV_NAME=${ENV_NAME:=$PHP_ENV}      # Check Phfffp
-  ENV_NAME=${ENV_NAME:=$GO_ENV}       # Check GO
-  ENV_NAME=${ENV_NAME-"development"}  # Fallback to 'development'
+  [ -z "$ENV_NAME" ] && ENV_NAME=$NODE_ENV
+  [ -z "$ENV_NAME" ] && ENV_NAME=$RACK_ENV
+  [ -z "$ENV_NAME" ] && ENV_NAME=$PHP_ENV
+  [ -z "$ENV_NAME" ] && ENV_NAME=$GO_ENV
+  [ -z "$ENV_NAME" ] && ENV_NAME="NULL_ENV"
 
-  printf "\n\n\t****\nENV_NAME: $ENV_NAME\n\n"
+  # printf "\n\n\t****\nENV_NAME: $ENV_NAME\n\n"
 
 # TRANSFORM INTO DISPLAY VALUE
-  [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="[LIVE]  " && ENV_LABEL="${RED}$ENV_LABEL"
-  [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="DEV     " && ENV_LABEL="${MAGENTA}$ENV_LABEL"
-  [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="STAGING " && ENV_LABEL="${LIME_YELLOW}$ENV_LABEL"
-  [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="TEST    " && ENV_LABEL="${CYAN}$ENV_LABEL"
-  [[ "$ENV_NAME" =~ ^"qa".*  ]]  && ENV_LABEL="QA      " && ENV_LABEL="${POWDER_BLUE}$ENV_LABEL"
+  [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="[LIVE]" && ENV_LABEL="${RED}$ENV_LABEL"
+  [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="DEV" && ENV_LABEL="${MAGENTA}$ENV_LABEL"
+  [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="STAGING" && ENV_LABEL="${LIME_YELLOW}$ENV_LABEL"
+  [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="TEST" && ENV_LABEL="${CYAN}$ENV_LABEL"
+  [[ "$ENV_NAME" =~ ^"qa".* ]]   && ENV_LABEL="QA" && ENV_LABEL="${POWDER_BLUE}$ENV_LABEL"
+  [[ "$ENV_NAME" =~ ^"NULL".* ]] && ENV_LABEL="NO_ENV" && ENV_LABEL="${RED}$ENV_LABEL"
   export ENV_NAME="$ENV_NAME"
   export ENV_LABEL="$ENV_LABEL"
 }
@@ -131,13 +132,21 @@ function set_shell_prompt () {
   ### *** SHELL PROMPT COLOR (root & non-root)
   if [[ "$OSX" == "true" ]]; then
     # export PS1="${GREEN} \h ${NORMAL} : ${YELLOW}\W ${MAGENTA}\u\$${NORMAL} "
-    export PS1="${MAGENTA}$USER${RED}@${YELLOW}$(hostname)${NORMAL}: ${BLUE}$(basename $PWD)/${NORMAL}${BRIGHT} # ${NORMAL} "
+    lbl_env="${BRIGHT}${WHITE}[${GREEN}${BRIGHT}$ENV_LABEL${BRIGHT}${WHITE}]"
+    lbl_host="${YELLOW}$(hostname)${NORMAL}:"
+    lbl_path="${BLUE}$(basename $PWD)"
+    if [ "$UID" == "0" ]; then
+      lbl_user="${RED}ROOT${BRIGHT}${YELLOW}@"
+    else
+      lbl_user="${MAGENTA}$USER${RED}@"
+    fi
+    export PS1="$lbl_env $lbl_user$lbl_host $lbl_path#${NORMAL} "
   elif [[ "$UID" == "0" ]]; then
     # So, we's root
     # Prior ver: export PS1="\[\e[31m\]$ENV_NAME\[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-    export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE}: ${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
+    export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE}::${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   else
-    export PS1="${CYAN}$ENV_LABEL${BRIGHT} :: ${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
+    export PS1="${CYAN}$ENV_LABEL${BRIGHT}::${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   fi
 }
 
