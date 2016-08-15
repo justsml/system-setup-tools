@@ -3,7 +3,14 @@
 # Automation: http://www.danlevy.net/2015/04/06/docker-server-setup-notes/
 # Source:     https://github.com/justsml/system-setup-tools/home-scripts/.bashrc
 
-# If not running interactively, don't do anything
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
+# If not running interactively, don't do anything more
 case $- in
     *i*) ;;
       *) return;;
@@ -49,8 +56,8 @@ fi
 # See bash(1) for more options
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTCONTROL=ignoredups
-HISTSIZE=2000
-HISTFILESIZE=4000
+HISTSIZE=4000
+HISTFILESIZE=8000
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -58,20 +65,6 @@ shopt -s histappend
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-# DON'T ENABLE - ** NEEDS TO BE RECURSIVE
-# shopt -s globstar
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -84,7 +77,19 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Global Install Now! 2015-05-10
-export NVM_DIR="/usr/local/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+### GPG Agent setup http://harryrschwartz.com/2014/11/05/configuring-gpg-agent-on-a-mac.html
+export GPG_TTY=$(tty)
+if [[ $(uname) == Darwin ]]; then
+  if [ -f "${HOME}/.gpg-agent-info" ]; then
+    . "${HOME}/.gpg-agent-info"
+    export GPG_AGENT_INFO
+    export SSH_AUTH_SOCK
+  fi
+fi
 
+# Add RVM to PATH
+[ -d "$HOME/.rvm/bin" ] && export PATH="$PATH:$HOME/.rvm/bin" 
+
+# Default to local profile install
+export NVM_DIR="$USER/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
