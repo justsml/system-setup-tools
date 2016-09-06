@@ -9,7 +9,8 @@
 # Note: Must be added to run from your profile/rc script `.bashrc` or `.profile` or whatever your OS uses.
 
 
-# INSTALL:
+# INSTALL: (append both init & aliases to existing)
+# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
 
 
@@ -17,7 +18,7 @@
 # [ -f ~/.bash_aliases ] && source ~/.bash_aliases || echo "Startup Warning: Cannot find expected ~/.bash_aliases file."
 
 KERNEL_NAME="$(uname -s)"
-[[ $KERNEL_NAME =~ ^"Darwin" ]] && OSX="true" || OSX="false"
+[[ $KERNEL_NAME =~ ^"Darwin" ]] && export OSX="true" || export OSX="false"
 
 
 #### MAIN ALIASES ####
@@ -47,20 +48,23 @@ alias loga='sudo tail -500f /var/log/auth.log'
 alias logs='sudo tail -500f /var/log/syslog'
 alias logm='sudo tail -500f /var/log/messages'
 
-# *** See port status
-alias ports-all='netstat -pawnt'
-alias ports-open='netstat -pawnt | grep LISTEN'
-alias ports-active='netstat -pawnt | grep ESTABLISHED'
-
 # ** List all IP addresses
 if [[ OSX == "true" ]]; then
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2"
+  # *** See port status
+  alias ports-all='netstat -nt'
+  alias ports-open='netstat -nt | grep LISTEN'
+  alias ports-active='netstat -nt | grep ESTABLISHED'
 else
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print $2}' | sed s/addr://"
+  # *** See port status
+  alias ports-all='netstat -pawnt'
+  alias ports-open='netstat -pawnt | grep LISTEN'
+  alias ports-active='netstat -pawnt | grep ESTABLISHED'
 fi
 
 # ** List paths
-alias path='echo -e ${PATH//:/\\n}'
+alias paths='echo -e ${PATH//:/\\n}'
 
 # *** Extend gnu cmds
 alias ll='ls -lachF'
@@ -112,12 +116,12 @@ function set_env_label () {
   [ -z "$ENV_NAME" ] && ENV_NAME=$RACK_ENV
   [ -z "$ENV_NAME" ] && ENV_NAME=$PHP_ENV
   [ -z "$ENV_NAME" ] && ENV_NAME=$GO_ENV
-  [ -z "$ENV_NAME" ] && ENV_NAME="NULL_ENV"
+  [ -z "$ENV_NAME" ] && ENV_NAME="NO_ENV"
 
   # printf "\n\n\t****\nENV_NAME: $ENV_NAME\n\n"
 
 # TRANSFORM INTO DISPLAY VALUE
-  [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="[LIVE]" && ENV_LABEL="${RED}$ENV_LABEL"
+  [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL=" LIVE " && ENV_LABEL="${RED}$ENV_LABEL"
   [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="DEV" && ENV_LABEL="${MAGENTA}$ENV_LABEL"
   [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="STAGING" && ENV_LABEL="${LIME_YELLOW}$ENV_LABEL"
   [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="TEST" && ENV_LABEL="${CYAN}$ENV_LABEL"
@@ -132,10 +136,10 @@ function set_shell_prompt () {
   ### *** SHELL PROMPT COLOR (root & non-root)
   if [[ "$OSX" == "true" ]]; then
     # export PS1="${GREEN} \h ${NORMAL} : ${YELLOW}\W ${MAGENTA}\u\$${NORMAL} "
-    lbl_env="${BRIGHT}${WHITE}[${GREEN}${BRIGHT}$ENV_LABEL${BRIGHT}${WHITE}]"
+    lbl_env="${BRIGHT}${WHITE}/${GREEN}${BRIGHT}$ENV_LABEL${BRIGHT}${WHITE}/"
     lbl_host="${YELLOW}$(hostname)${NORMAL}:"
     lbl_path="${BLUE}$(basename $PWD)"
-    if [ "$UID" == "0" ]; then
+    if [[ "$UID" == "0" ]]; then
       lbl_user="${RED}ROOT${BRIGHT}${YELLOW}@"
     else
       lbl_user="${MAGENTA}$USER${RED}@"
@@ -144,12 +148,11 @@ function set_shell_prompt () {
   elif [[ "$UID" == "0" ]]; then
     # So, we's root
     # Prior ver: export PS1="\[\e[31m\]$ENV_NAME\[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-    export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE}::${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
+    export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE}=${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   else
     export PS1="${CYAN}$ENV_LABEL${BRIGHT}::${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   fi
 }
-
 
 
 ## Run this town... code!
