@@ -52,9 +52,9 @@ alias logm='sudo tail -500f /var/log/messages'
 if [[ OSX == "true" ]]; then
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2"
   # *** See port status
-  alias ports-all='netstat -nt'
-  alias ports-open='netstat -nt | grep LISTEN'
-  alias ports-active='netstat -nt | grep ESTABLISHED'
+  alias ports-all='lsof -Pn -i4'
+  alias ports-open='lsof -Pn -i4 | grep LISTEN'
+  alias ports-active='lsof -Pn -i4 | grep ESTABLISHED'
 else
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print $2}' | sed s/addr://"
   # *** See port status
