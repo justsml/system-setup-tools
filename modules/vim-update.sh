@@ -1,10 +1,28 @@
 #!/bin/bash
-
-export TOOLS_URI=https://raw.githubusercontent.com/justsml/system-setup-tools
-
-
 set -e
 
+# Credit:
+# https://raw.githubusercontent.com/justsml/system-setup-tools/
+# /modules/vim-update.sh
+
+function check_options () {
+  [ "$(grep '^\s*set tabstop' ~/.vimrc)" == "" ] && echo 'set tabstop=2' >> ~/.vimrc || echo "tabstop already set"
+  [ "$(grep '^\s*set softtabstop' ~/.vimrc)" == "" ] && echo 'set softtabstop=2' >> ~/.vimrc || echo "softtabstop already set"
+  [ "$(grep '^\s*set expandtab' ~/.vimrc)" == "" ] && echo 'set expandtab' >> ~/.vimrc || echo "expandtab already set"
+  [ "$(grep '^\s*set cursorline' ~/.vimrc)" == "" ] && echo 'set cursorline' >> ~/.vimrc || echo "cursorline already set"
+  [ "$(grep '^\s*filetype indent' ~/.vimrc)" == "" ] && echo 'filetype indent on' >> ~/.vimrc || echo "filetype already set"
+  [ "$(grep '^\s*syntax' ~/.vimrc)" == "" ] && echo 'syntax enable' >> ~/.vimrc || echo "syntax already enabled"
+  [ "$(grep '^\s*set hlsearch' ~/.vimrc)" == "" ] && echo 'set hlsearch' >> ~/.vimrc || echo "search highlighting already enabled"
+
+  if [ "$(grep '^\s*nnoremap .F2.' ~/.vimrc)" == "" ]; then
+    echo '# Set F2 to toggle paste mode' >> ~/.vimrc
+    echo 'nnoremap <F2> :set invpaste paste?<CR>' >> ~/.vimrc
+    echo 'set pastetoggle=<F2>' >> ~/.vimrc
+    echo 'set showmode' >> ~/.vimrc    
+  else
+    echo "syntax already enabled"
+  fi
+}
 
 function check_paths () {
 	if [ ! -d ~/.vim/colors ]; then
@@ -83,5 +101,5 @@ function vim_check () {
 check_paths
 vim_check
 get_themes
-
+check_options
 
