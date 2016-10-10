@@ -38,7 +38,7 @@ NODE_VER="$(node -v 2>/dev/null)"
 if [[ $NODE_VER =~ "(v6|v7|v8)" ]]; then
   # No alias needed?
   # Node version is new enough, some (or most) ES6/harmony features available...
-  alias node='node --harmony --harmony_modules --harmony_sloppy_function --harmony_default_parameters'
+  alias node='node --harmony --harmony_default_parameters'
 else
   alias node='node --harmony --harmony_modules --harmony_sloppy_function --harmony_sloppy_let --harmony_arrow_functions --harmony_default_parameters --harmony_destructuring'
 fi
@@ -93,7 +93,7 @@ alias cls='clear'
 #     echo "${RED}this is red ${NORMAL}this is normal"
 BLACK=$(tput setaf 0)
 BLUE=$(tput setaf 4)
-BRIGHT=$(tput bold)
+#BRIGHT=$(tput bold)
 CYAN=$(tput setaf 6)
 GREEN=$(tput setaf 2)
 LIME_YELLOW=$(tput setaf 190)
@@ -132,15 +132,15 @@ function set_env_label () {
 }
 
 function set_shell_prompt () {
-  ## e.g. export PS1="${CYAN}$ENV_LABEL${BRIGHT} :: ${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
+  ## e.g. export PS1="${CYAN}$ENV_LABEL :: ${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   ### *** SHELL PROMPT COLOR (root & non-root)
   if [[ "$OSX" == "true" ]]; then
     # export PS1="${GREEN} \h ${NORMAL} : ${YELLOW}\W ${MAGENTA}\u\$${NORMAL} "
-    lbl_env="${BRIGHT}${WHITE}/${GREEN}${BRIGHT}$ENV_LABEL${BRIGHT}${WHITE}/"
+    lbl_env="${WHITE}/${GREEN}$ENV_LABEL${WHITE}/"
     lbl_host="${YELLOW}$(hostname)${NORMAL}:"
     lbl_path="${BLUE}$(basename $PWD)"
     if [[ "$UID" == "0" ]]; then
-      lbl_user="${RED}ROOT${BRIGHT}${YELLOW}@"
+      lbl_user="${RED}ROOT${YELLOW}@"
     else
       lbl_user="${MAGENTA}$USER${RED}@"
     fi
@@ -148,9 +148,9 @@ function set_shell_prompt () {
   elif [[ "$UID" == "0" ]]; then
     # So, we's root
     # Prior ver: export PS1="\[\e[31m\]$ENV_NAME\[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-    export PS1="${MAGENTA}${BRIGHT}$ENV_LABEL${WHITE}=${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
+    export PS1="${MAGENTA}$ENV_LABEL${WHITE}=${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   else
-    export PS1="${CYAN}$ENV_LABEL${BRIGHT}::${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
+    export PS1="${CYAN}$ENV_LABEL::${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
   fi
 }
 
