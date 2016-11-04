@@ -21,6 +21,12 @@ KERNEL_NAME="$(uname -s)"
 [[ $KERNEL_NAME =~ ^"Darwin" ]] && export OSX="true" || export OSX="false"
 
 
+HISTCONTROL=ignoredups
+HISTFILESIZE=10000
+HISTSIZE=10000
+shopt -s histappend
+
+
 #### MAIN ALIASES ####
 
 # ** Rsync copy preserve-Attribs, Recursive, w/ Progress
@@ -156,9 +162,11 @@ function set_shell_prompt () {
 
 
 ## Run this town... code!
-set_env_label
-set_shell_prompt
+# set_env_label
+# set_shell_prompt
 
+# PS1='\[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
+export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
 
 
 
