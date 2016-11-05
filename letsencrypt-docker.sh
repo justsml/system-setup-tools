@@ -10,7 +10,7 @@ docker run -it --rm -p 443:443 -p 80:80 --name certbot \
             --noninteractive \
             --expand --allow-subset-of-names \
             --agree-tos --rsa-key-size 4096 \
-            --email postmaster@elasticsuite.com \
+            --email postmaster@example.com \
             --domains $domain_list
             
 
