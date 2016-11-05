@@ -7,13 +7,9 @@
 
 
 # INSTALL: w/ bash_aliases (appends to existing) 
-# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
-# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
-
-
-# NOTE: Alias definitions are in ~/.bash_aliases
-
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc    &&    curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
+# OR OVERWRITE existing scripts:
+# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc > ~/.bashrc    &&    curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases > ~/.bash_aliases
 
 # If not running interactively, don't do anything more
 case $- in
@@ -25,8 +21,8 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history. #> See bash(1) for more options
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# don't add duplicate lines #> See bash(1) for more options
+# for history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTCONTROL=ignoredups
 HISTSIZE=15000
 HISTFILESIZE=15000
@@ -35,6 +31,9 @@ HISTFILESIZE=15000
 shopt -s histappend
 # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
+# NOTE: Alias definitions are in ~/.bash_aliases
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 # enable programmable completion features 
 if ! shopt -oq posix; then
