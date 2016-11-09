@@ -5,7 +5,8 @@
 # Source: https://github.com/justsml/system-setup-tools/edit/master/home-scripts/.bashrc
 # Note: Must be added to your home folder's `.bashrc` or `.*profile` or whatever your OS uses.
 
-
+# PRE REQ / PRE INSTALL
+# apt-get update && apt-get install -y curl pv wget sudo iotop htop apt-transport-https ca-certificates strace ltrace
 # INSTALL: w/ bash_aliases (appends to existing) 
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc    &&    curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
 # OR OVERWRITE existing scripts:
