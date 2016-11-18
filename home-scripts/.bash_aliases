@@ -218,12 +218,12 @@ function init_term_cmds () {
 }
 
 function get_platform () {
-    case `uname -s` in
-        Darwin) echo "osx"    ;;
-        Linux)  echo "linux"  ;;
-        SunOS)  echo "sunos"  ;;
-        *)      echo "common" ;;
-    esac
+  case `uname -s` in
+    Darwin) echo "osx"    ;;
+    Linux)  echo "linux"  ;;
+    SunOS)  echo "sunos"  ;;
+    *)      echo "common" ;;
+  esac
 }
 
 ## Run this town... code!
