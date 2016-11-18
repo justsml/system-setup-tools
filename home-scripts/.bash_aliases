@@ -160,16 +160,6 @@ function set_shell_prompt () {
   fi
 }
 
-
-## Run this town... code!
-# set_env_label
-# set_shell_prompt
-
-# PS1='\[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
-export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-
-
-
 ## Helper Functions ##
 function get_env_label () {
   ### Get Env Name - uses first val:
@@ -191,6 +181,61 @@ function get_env_label () {
   export ENV_LABEL="$ENV_LABEL"
   #return $ENV_LABEL
 }
+
+# credit: http://mywiki.wooledge.org/BashFAQ/037
+function init_term_cmds () {
+  # only set if we're on an interactive session
+  [[ -t 2 ]] && {
+    reset=$(    tput sgr0   || tput me      ) # Reset cursor
+    bold=$(     tput bold   || tput md      ) # Start bold
+    under=$(    tput smul   || tput us      ) # Start underline
+    italic=$(   tput sitm   || tput ZH      ) # Start italic
+    eitalic=$(  tput ritm   || tput ZH      ) # End italic
+    default=$(  tput op                     )
+    back=$'\b'
+
+    [[ $TERM != *-m ]] && {
+      black=$(    tput setaf 0 || tput AF 0    )
+      red=$(      tput setaf 1 || tput AF 1    )
+      green=$(    tput setaf 2 || tput AF 2    )
+      yellow=$(   tput setaf 3 || tput AF 3    )
+      blue=$(     tput setaf 4 || tput AF 4    )
+      magenta=$(  tput setaf 5 || tput AF 5    )
+      cyan=$(     tput setaf 6 || tput AF 6    )
+      white=$(    tput setaf 7 || tput AF 7    )
+
+      onblue=$(   tput setab 4 || tput AB 4    )
+      ongrey=$(   tput setab 7 || tput AB 7    )
+    }
+  } 2>/dev/null ||:
+
+  # osx's termcap doesn't have italics. The below adds support for iTerm2
+  # and is harmless on Terminal.app
+  [ "$(get_platform)" = "osx" ] && {
+    italic=$(echo -e "\033[3m")
+    eitalic=$(echo -e "\033[23m")
+  }
+}
+
+function get_platform () {
+    case `uname -s` in
+        Darwin) echo "osx"    ;;
+        Linux)  echo "linux"  ;;
+        SunOS)  echo "sunos"  ;;
+        *)      echo "common" ;;
+    esac
+}
+
+## Run this town... code!
+# set_env_label
+# set_shell_prompt
+init_term_cmds
+
+# PS1='\[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
+export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
+export PS1="${yellow}\H${white}@${green}\u${white}: ${cyan}\w${white}\$ ${reset}"
+
+
 
 ### === END DAN'S ALIASES === ###
 
