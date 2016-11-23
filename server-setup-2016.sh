@@ -2,6 +2,8 @@
 set -e 
 
 # This is for the cloud! (and cloud-like things)
+# USAGE:
+# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/server-setup-2016.sh | bash
 
 ## SETUP Base Pkgs
 sudo apt update
