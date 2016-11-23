@@ -1,9 +1,12 @@
 #!/bin/bash
 set -e 
 
-## This is for clouds and things
+# This is for the cloud! (and cloud-like things)
+
+## SETUP Base Pkgs
 sudo apt update
 sudo apt install -y bash-completion curl wget vim-nox openssh pv iotop htop apt-transport-https ca-certificates strace ltrace
+sudo apt -y dist-upgrade 
 
 ## Setup ENV Stuff
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
