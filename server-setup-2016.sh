@@ -24,6 +24,10 @@ sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubu
 sudo chmod 755 /etc/init.d/disable-transparent-hugepages
 sudo update-rc.d disable-transparent-hugepages defaults
 
+## SETUP Docker 
+curl -sSL https://get.docker.com/ | sudo bash
+
+
 ## SETUP ZEROTIER
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/zero-tier.sh | bash
 
