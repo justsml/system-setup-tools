@@ -7,7 +7,7 @@ set -e
 
 ## SETUP Base Pkgs
 sudo apt update
-sudo apt install -y bash-completion dialog curl wget vim-nox openssl pv iotop htop apt-transport-https ca-certificates strace ltrace
+sudo apt install -y bash-completion dialog curl wget vim-nox openssl pv iotop htop apt-transport-https ca-certificates strace ltrace apparmor_parser
 sudo apt -y dist-upgrade 
 
 ## Setup ENV Stuff
