@@ -1,5 +1,9 @@
 #!/bin/bash
-set -e 
+set +e 
+#### ^^^^ WARN: Continues on ERRORS
+#### ^^^^ WARN: Continues on ERRORS
+#### ^^^^ WARN: Continues on ERRORS
+#### ^^^^ WARN: Continues on ERRORS
 
 # This is for the cloud! (and cloud-like things)
 # USAGE:
@@ -26,7 +30,6 @@ sudo update-rc.d disable-transparent-hugepages defaults
 
 ## SETUP Docker 
 curl -sSL https://get.docker.com/ | sudo bash
-
 
 ## SETUP ZEROTIER
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/zero-tier.sh | bash
