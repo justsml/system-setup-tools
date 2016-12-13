@@ -9,6 +9,12 @@ set +e
 # USAGE:
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/server-setup-2016.sh | bash
 
+# Create shared main folder structure /data
+mkdir -p /data/drone/var/lib/drone \
+         /data/drone/opt/rancher \
+         /data/drone/etc/drone \
+         /data/{redis,mongodb,logs,rancher,registry,_shared}
+
 ## SETUP Base Pkgs
 sudo apt update
 sudo apt install -y bash-completion dialog curl wget vim-nox openssl pv iotop htop apt-transport-https ca-certificates strace ltrace fail2ban
