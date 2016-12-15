@@ -40,4 +40,12 @@ curl -sSL https://get.docker.com/ | sudo bash
 ## SETUP ZEROTIER
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/zero-tier.sh | bash
 
+if [ ! -f /root/.ssh/id_ed25519 ]; then
+    ssh-keygen -N '' -t ed25519 -f /root/.ssh/id_ed25519
+fi
+printf '\n\n\n******* START: SSH PUB KEY ********* \n\n\n'
+cat /root/.ssh/id_ed25519.pub
+printf '\n******* DONE: SSH PUB KEY ********* \n\n'
+
 printf '\n\n ******* DONE: SERVER-SETUP-2016 ******* \n\n'
+
