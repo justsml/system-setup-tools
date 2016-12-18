@@ -91,5 +91,9 @@ genSshId
 enableSSHKeepAlive
 serverSystemTuning
 
+printf '\n\n### Attempting SSH Key Check & AutoGenerator \n'
+curl -L https://github.com/justsml/system-setup-tools/raw/master/modules/ssh-key-generator.sh | HOME_DIR=/root bash
+printf   '\n### DONEL SSH Check \n'
+
 printf '\n\n ******* DONE: SERVER-SETUP-2016 ******* \n\n'
 
