@@ -11,14 +11,19 @@ set +e
 
 # Create shared main folder structure /data
 mkdir -p /data/drone/var/lib/drone \
-         /data/drone/opt/rancher \
-         /data/drone/etc/drone \
-         /data/{redis,mongodb,logs,rancher,registry,_shared}
+  /data/drone/opt/rancher \
+  /data/drone/etc/drone \
+  /data/{redis,mongodb,logs,rancher,registry,_shared}
 
 ## SETUP Base Pkgs
-sudo apt update
-sudo apt install -y bash-completion dialog curl wget vim-nox openssl pv iotop htop apt-transport-https ca-certificates strace ltrace fail2ban
-sudo apt -y dist-upgrade 
+sudo DEBIAN_FRONTEND=noninteractive \
+ apt-get update && \
+ apt-get -y dist-upgrade && \
+ apt-get install -y bash-completion dialog \
+    curl wget vim-nox openssl pv iotop htop \
+    apt-transport-https ca-certificates strace ltrace fail2ban \
+    parted sshfs aufs-tools zfs nfs-common 
+# Install on nfs file server: nfs-kernel-server
 
 ## Setup ENV Stuff
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
@@ -30,7 +35,7 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDAvLexXB7TqW9mn6bNZbfp7tEkR27c13p31z
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKELYVfFjdT4aud/J6X7ZctlkTCCsY5NlIZvSGZdiZrrHkYTjSATk3ZOSySz8rtXxMkCCekiawjWZeoBQTwGoqLP0WDCFIHWZ+aoskVxIbgHF/C4UeBejMPvz43Fo9Ff5tr6Y12MrmuDY/OLiDTBIZw9+LURWziJXbGDx9/ak7TuAXvSuphC0rh9nVjtpdoOSK0S43i37FLPtkR1P3lpYi+QeJ9FHb4IDCtPENv/tqEY6+Z8PtLRjyPuRljcG2KELhFozAW5HIRbfaQmHooNnejAWQRGXxoh0auNLvAaCw+3TE/q+Fi/XQyX6Ut/DplatLDKjV/6Ho2Ue+83sW70D5yoMXY3xF25UH6e6RUgN2YLFjONe0A23vi074FPxN6vrJU9cFfW4fSSaVYyfxylPs7dMhzD2qjPtbkVMt4Pjd0DCOaQsP2Slfup1eN8UxycgJDM3n+5E8eJeOsHQjyytIzOT0wfJpYTeCpQ1ViLh9dr53+SUGUm07Fmy7GfzuM+iDeqcIOJdFNGObd0KOkO+oyniHO2jm6HtIh81SXFDx8V5nwUF4eYv7qmZOT2kxHSJOZYud0s/4ZtcBZd6QobBsY38r9uJpVXeRopIXhmpAZmDvT/rDSKh7N9UNadNKUwZ1rosTPnim83R335XPD4jm2cwTWvq9vtOe0wBtftr6AQ== dan@Dev08" >> ~/.ssh/authorized_keys
 
 ## SETUP Docker 
-curl -sSL https://get.docker.com/ | sudo bash
+curl -sSL https://get.docker.com/ | sudo DEBIAN_FRONTEND=noninteractive bash
 
 ## SETUP ZEROTIER
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/zero-tier.sh | bash
@@ -38,7 +43,7 @@ curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/mo
 function genSshId () {
   printf '\n\n\n******* START: SSH PUB KEY ********* \n\n\n'
   if [ ! -f /root/.ssh/id_ed25519 ]; then
-     ssh-keygen -N '' -t ed25519 -f /root/.ssh/id_ed25519
+     DEBIAN_FRONTEND=noninteractive ssh-keygen -N '' -t ed25519 -f /root/.ssh/id_ed25519
   fi
 
   [ -f /root/.ssh/id_ed25519.pub ] && cat /root/.ssh/id_ed25519.pub || printf '\n\n\nCRITICAL ERROR: NO ED25519 SSH KEY FOUND\n\n\n'
