@@ -92,6 +92,17 @@ alias du3='du -d 3 -h -c -x'
 # Old Misc Polyfills
 alias cls='clear'
 
+# Recovered from http://alias.sh
+#identify and search for active network connections
+spy () { lsof -i -P +c 0 +M | grep -i "$1" }
+#List top ten largest files/directories in current directory
+alias ducks='du -cks *|sort -rn|head -11'
+alias dskload="ps faux|awk '\$8 ~ /D/{print}'"
+#Find a String in the Entire Git History
+alias gitsearch='git rev-list --all | xargs git grep -F'
+#history-search
+alias hs='history | grep --color=auto'
+
 # *** Add Named Colors
 # (credit: SiegeX - http://stackoverflow.com/questions/4332478/read-the-current-text-color-in-a-xterm/4332530#4332530 )
 #   Examples:
