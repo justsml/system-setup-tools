@@ -14,9 +14,10 @@
 
 # If not running interactively, don't do anything more
 case $- in
-    *i*) ;;
-      *) return;;
+  *i*) ;;
+    *) return;;
 esac
+
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
@@ -28,10 +29,12 @@ HISTCONTROL=ignoredups
 HISTSIZE=15000
 HISTFILESIZE=15000
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-# check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+if [[ -f "$(which shopt 2>/dev/null)" ]]; then
+  # append to the history file, don't overwrite it
+  shopt -s histappend
+  # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
+  shopt -s checkwinsize
+fi
 
 # NOTE: Alias definitions are in ~/.bash_aliases
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
@@ -46,8 +49,9 @@ if ! shopt -oq posix; then
 fi
 
 ### GPG Agent setup http://harryrschwartz.com/2014/11/05/configuring-gpg-agent-on-a-mac.html
-export GPG_TTY=$(tty)
 if [[ $(uname) == Darwin ]]; then
+  export GPG_TTY=$(tty)
+
   if [ -f "${HOME}/.gpg-agent-info" ]; then
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
