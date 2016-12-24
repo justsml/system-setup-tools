@@ -1,25 +1,26 @@
 #!/bin/bash
-# To Debug:          set -x
-# To Fail on Errors: set -e
 
+## To Debug:
+# set -x
+# To Fail on Errors: set -e
 #############################################
 ### DAN'S SHELL ALIASES FILE ################
 # Tested on: Debian/Ubuntu, Fedora, Mac OSX #
 # Source: https://github.com/justsml/system-setup-tools/edit/master/home-scripts/.bash_aliases
 # Note: Must be added to run from your profile/rc script `.bashrc` or `.profile` or whatever your OS uses.
-
-
+#############################################
 # INSTALL: (append both init & aliases to existing)
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
-
-
-# Add next line to `~/.bashrc` `~/.zshrc` or add it globally to `/etc/profile` (addtl steps reqd)
-# [ -f ~/.bash_aliases ] && source ~/.bash_aliases || echo "Startup Warning: Cannot find expected ~/.bash_aliases file."
+## ADVANCED: INSTALL BY FORCE - DONT DO THIS UNLESS YOU'VE READ THE SCRIPTS
+# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc > ~/.bashrc && curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases > ~/.bash_aliases
 
 KERNEL_NAME="$(uname -s)"
-[[ $KERNEL_NAME =~ ^"Darwin" ]] && export OSX="true" || export OSX="false"
-
+if [[ $KERNEL_NAME =~ ^"Darwin" ]]; then
+  export OSX="true"
+else
+  export OSX="false"
+fi
 #### MAIN ALIASES ####
 
 # ** Rsync copy preserve-Attribs, Recursive, w/ Progress
@@ -30,26 +31,26 @@ alias copy='rsync -WarP'
 if [ -f "$(which chkconfig 2>/dev/null)" ]; then
   alias service-list="chkconfig --list | grep '3:on'"
   alias services-all="chkconfig --list | grep '3:on'"
-elif [ "$(uname)" == "Darwin" ]; then
-  alias service-list="echo 'Haha, good luck with `launchctl`'"
-  alias services-all="echo 'Haha, good luck with `launchctl`'"
+fi
+if [ "$(uname)" == "Darwin" ]; then
+  alias service-list="echo 'Haha, good luck with launchctl'"
+  alias services-all="echo 'Haha, good luck with launchctl'"
 else
   alias service-list="service --status-all"
   alias services-all="service --status-all"
 fi
 
 # *** Brings harmony to the lands
-NODE_VER="$(node -v 2>/dev/null)"
 alias node='node --harmony '
 
 # ** monitor logs
 alias loga='sudo tail -500f /var/log/auth.log'
 alias logs='sudo tail -500f /var/log/syslog'
 alias logm='sudo tail -500f /var/log/messages'
-alias logk='sudo tail -500f /var/log/kern.log'
+# alias logk='sudo tail -500f /var/log/kern.log'
 
 # ** List all IP addresses (see netspy & netlisteners helpers below)
-if [[ OSX == "true" ]]; then
+if [[ "$OSX" == "true" ]]; then
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2"
   # *** See port status
   alias ports-all='lsof -Pn -i4'
@@ -101,33 +102,36 @@ alias hs='history | grep --color=auto'
 alias hsx='history | egrep --color=auto'
 alias netlisteners='lsof -i -P | grep LISTEN'
 #identify and search for active network connections
-netspy () { lsof -i -P +c 0 +M | grep -i "$1" }
+# netspy() { lsof -i -P +c 0 +M | grep -i "$1" }
 # Extract almost any compressed format
-extractall () {
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1     ;;
-      *.tar.gz)    tar xzf $1     ;;
-      *.bz2)       bunzip2 $1     ;;
-      *.rar)       unrar e $1     ;;
-      *.gz)        gunzip $1      ;;
-      *.tar)       tar xf $1      ;;
-      *.tbz2)      tar xjf $1     ;;
-      *.tgz)       tar xzf $1     ;;
-      *.zip)       unzip $1       ;;
-      *.Z)         uncompress $1  ;;
-      *.7z)        7z x $1        ;;
-      *)     echo "'$1' cannot be extracted via extractall()" ;;
-     esac
-  else
-     echo "'$1' is not a valid file"
-  fi
-}
+# extractall () {
+#   if [ -f $1 ] ; then
+#     case $1 in
+#       *.tar.bz2)   tar xjf $1     ;;
+#       *.tar.gz)    tar xzf $1     ;;
+#       *.bz2)       bunzip2 $1     ;;
+#       *.rar)       unrar e $1     ;;
+#       *.gz)        gunzip $1      ;;
+#       *.tar)       tar xf $1      ;;
+#       *.tbz2)      tar xjf $1     ;;
+#       *.tgz)       tar xzf $1     ;;
+#       *.zip)       unzip $1       ;;
+#       *.Z)         uncompress $1  ;;
+#       *.7z)        7z x $1        ;;
+#       *)     echo "'$1' cannot be extracted via extractall()" ;;
+#      esac
+#   else
+#      echo "'$1' is not a valid file"
+#   fi
+# }
 
-#Reconnect or start a tmux or screen session over ssh
-shux () { ssh -t "$1" 'tmux attach || tmux new || screen -DR'; }
+# #Reconnect or start a tmux or screen session over ssh
+# shux () { ssh -t "$1" 'tmux attach || tmux new || screen -DR'; }
 
 
+# if [ "$ZSH" != "" ]; then
+#   exit 0
+# fi
 
 # # *** Add Named Colors
 # # (credit: SiegeX - http://stackoverflow.com/questions/4332478/read-the-current-text-color-in-a-xterm/4332530#4332530 )
@@ -252,7 +256,7 @@ function init_term_cmds () {
     italic=$(echo -e "\033[3m")
     eitalic=$(echo -e "\033[23m")
   }
- export black blue bold cyan default eitalic green italic magenta onblue ongrey red reset under white yellow
+ export back black blue bold cyan default eitalic green italic magenta onblue ongrey red reset under white yellow
 }
 
 function get_platform () {
@@ -265,7 +269,7 @@ function get_platform () {
 }
 
 ## Run this town... code!
-if [ -f "$(which tput 2>/dev/null)" ]; then
+if [ -f "$(which tput)" ]; then
   # set_env_label
   # set_shell_prompt
   init_term_cmds
@@ -274,10 +278,13 @@ fi
 if [ -z "$ZSH" ]; then
   # PS1='\[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
   # export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-  [ $UID == "0" ] && user_color=$red || user_color=$green
+  export PS1_BACKUP=$PS1
+  if [ "$UID" == "0" ]; then
+    user_color=$red
+  else
+    user_color=$green
+  fi
   export PS1="${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$ ${reset}"
 fi
 
-
 ### === END DAN'S ALIASES === ###
-
