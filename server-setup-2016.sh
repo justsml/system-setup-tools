@@ -1,5 +1,5 @@
 #!/bin/bash
-set +e 
+#set -e 
 #### ^^^^ WARN: Continues on ERRORS
 #### ^^^^ WARN: Continues on ERRORS
 #### ^^^^ WARN: Continues on ERRORS
