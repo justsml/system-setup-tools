@@ -100,10 +100,28 @@ net.ipv4.ip_local_port_range = 1024 65535
 HEREDOC
   fi
   
-  ## SETUP MONGODB SYSCTL TUNING ##
-  sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
-  sudo chmod 755 /etc/init.d/disable-transparent-hugepages
-  sudo update-rc.d disable-transparent-hugepages defaults
+  if [ ! -f /etc/init.d/disable-transparent-hugepages ]; then
+    ## SETUP MONGODB SYSCTL TUNING ##
+    sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
+    sudo chmod 755 /etc/init.d/disable-transparent-hugepages
+    sudo update-rc.d disable-transparent-hugepages defaults
+  fi
+  
+  ## ADD CGROUP STUFF TO GRUB
+  if [ "$(grep 'cgroup_enable=memory' /etc/default/grub)" == "" ]; then 
+    if [ "$(grep 'GRUB_CMDLINE_LINUX' /etc/default/grub)" == "" ]; then 
+      echo 'GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"' >> /etc/default/grub
+    else
+      sudo sed -i 's/\(GRUB_CMDLINE_LINUX_DEFAULT="\)"/\1cgroup_enable=memory swapaccount=1"/' /etc/default/grub 
+    fi
+    sudo update-grub
+    printf "\n### *** UPDATED GRUB W/ CGROUPS *** ###\n\n\n"
+    printf "\n### *** RESTART REQUIRED *** ###\n" && sleep 2s
+    printf "\n### *** RESTART REQUIRED *** ###\n" && sleep 2s
+    printf "\n### *** RESTART REQUIRED *** ###\n" && sleep 2s
+    printf "\n### *** RESTART REQUIRED *** ###\n" && sleep 2s
+    printf "#####################\n\n\n\n\n\n"
+  fi
 }
 
 genSshId
