@@ -26,8 +26,8 @@ esac
 # don't add duplicate lines #> See bash(1) for more options
 # for history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTCONTROL=ignoredups
-HISTSIZE=15000
-HISTFILESIZE=15000
+HISTSIZE=25000
+HISTFILESIZE=250000
 
 if [[ -f "$(which shopt 2>/dev/null)" ]]; then
   # append to the history file, don't overwrite it
