@@ -14,7 +14,7 @@
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
 
 
-# Add next line to `~/.bashrc`
+# Add next line to `~/.bashrc` `~/.zshrc` or add it globally to `/etc/profile` (addtl steps reqd)
 # [ -f ~/.bash_aliases ] && source ~/.bash_aliases || echo "Startup Warning: Cannot find expected ~/.bash_aliases file."
 
 KERNEL_NAME="$(uname -s)"
@@ -27,14 +27,19 @@ alias cpsync='rsync -WarP'
 alias copy='rsync -WarP'
 
 # *** list startup services - No Mac Support. launchctrl. pffff.
-if [[ -f "$(which chkconfig 2>/dev/null)" ]]; then
+if [ -f "$(which chkconfig 2>/dev/null)" ]; then
   alias service-list="chkconfig --list | grep '3:on'"
   alias services-all="chkconfig --list | grep '3:on'"
+elif [ "$(uname)" == "Darwin" ]; then
+  alias service-list="echo 'Haha, good luck with `launchctl`'"
+  alias services-all="echo 'Haha, good luck with `launchctl`'"
+else
+  alias service-list="service --status-all"
+  alias services-all="service --status-all"
 fi
 
-# *** Brings harmony to the lands (remove for old node versions)
+# *** Brings harmony to the lands
 NODE_VER="$(node -v 2>/dev/null)"
-
 alias node='node --harmony '
 
 # ** monitor logs
@@ -43,7 +48,7 @@ alias logs='sudo tail -500f /var/log/syslog'
 alias logm='sudo tail -500f /var/log/messages'
 alias logk='sudo tail -500f /var/log/kern.log'
 
-# ** List all IP addresses
+# ** List all IP addresses (see netspy & netlisteners helpers below)
 if [[ OSX == "true" ]]; then
   alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2"
   # *** See port status
@@ -86,20 +91,19 @@ alias dud3='du -d 3 -h -c -x' # Sums 3 folder deep, same fs
 alias cls='clear'
 
 #>>>> Recovered from http://alias.sh
-#identify and search for active network connections
-spy () { lsof -i -P +c 0 +M | grep -i "$1" }
 #List top ten largest files/directories in current directory
 alias ducks='du -cks *|sort -rn|head -11'
 alias dskload="ps faux|awk '\$8 ~ /D/{print}'"
 #Find a String in the Entire Git History
-alias gitsearch='git rev-list --all | xargs git grep -F'
+alias findgit='git rev-list --all | xargs git grep -F'
 #history-search
 alias hs='history | grep --color=auto'
-alias hsx='history | grep --color=auto'
+alias hsx='history | egrep --color=auto'
 alias netlisteners='lsof -i -P | grep LISTEN'
-
+#identify and search for active network connections
+netspy () { lsof -i -P +c 0 +M | grep -i "$1" }
 # Extract almost any compressed format
-extract_any () {
+extractall () {
   if [ -f $1 ] ; then
     case $1 in
       *.tar.bz2)   tar xjf $1     ;;
@@ -113,7 +117,7 @@ extract_any () {
       *.zip)       unzip $1       ;;
       *.Z)         uncompress $1  ;;
       *.7z)        7z x $1        ;;
-      *)     echo "'$1' cannot be extracted via extract()" ;;
+      *)     echo "'$1' cannot be extracted via extractall()" ;;
      esac
   else
      echo "'$1' is not a valid file"
@@ -121,9 +125,9 @@ extract_any () {
 }
 
 #Reconnect or start a tmux or screen session over ssh
-sssh (){ ssh -t "$1" 'tmux attach || tmux new || screen -DR'; }
+shux () { ssh -t "$1" 'tmux attach || tmux new || screen -DR'; }
 
- 
+
 
 # # *** Add Named Colors
 # # (credit: SiegeX - http://stackoverflow.com/questions/4332478/read-the-current-text-color-in-a-xterm/4332530#4332530 )
@@ -217,40 +221,38 @@ sssh (){ ssh -t "$1" 'tmux attach || tmux new || screen -DR'; }
 
 # credit: http://mywiki.wooledge.org/BashFAQ/037
 function init_term_cmds () {
-  if [[ -f "$(which tput 2>/dev/null)" ]]; then
-    # only set if we're on an interactive session
-    [[ -t 2 ]] && {
-      reset=$(    tput sgr0   || tput me      ) # Reset cursor
-      bold=$(     tput bold   || tput md      ) # Start bold
-      under=$(    tput smul   || tput us      ) # Start underline
-      italic=$(   tput sitm   || tput ZH      ) # Start italic
-      eitalic=$(  tput ritm   || tput ZH      ) # End italic
-      default=$(  tput op                     )
-      back=$'\b'
+  # only set if we're on an interactive session
+  [[ -t 2 ]] && {
+    reset=$(    tput sgr0   || tput me      ) # Reset cursor
+    bold=$(     tput bold   || tput md      ) # Start bold
+    under=$(    tput smul   || tput us      ) # Start underline
+    italic=$(   tput sitm   || tput ZH      ) # Start italic
+    eitalic=$(  tput ritm   || tput ZH      ) # End italic
+    default=$(  tput op                     )
+    back=$'\b'
 
-      [[ $TERM != *-m ]] && {
-        black=$(    tput setaf 0 || tput AF 0    )
-        red=$(      tput setaf 1 || tput AF 1    )
-        green=$(    tput setaf 2 || tput AF 2    )
-        yellow=$(   tput setaf 3 || tput AF 3    )
-        blue=$(     tput setaf 4 || tput AF 4    )
-        magenta=$(  tput setaf 5 || tput AF 5    )
-        cyan=$(     tput setaf 6 || tput AF 6    )
-        white=$(    tput setaf 7 || tput AF 7    )
+    [[ $TERM != *-m ]] && {
+      black=$(    tput setaf 0 || tput AF 0    )
+      red=$(      tput setaf 1 || tput AF 1    )
+      green=$(    tput setaf 2 || tput AF 2    )
+      yellow=$(   tput setaf 3 || tput AF 3    )
+      blue=$(     tput setaf 4 || tput AF 4    )
+      magenta=$(  tput setaf 5 || tput AF 5    )
+      cyan=$(     tput setaf 6 || tput AF 6    )
+      white=$(    tput setaf 7 || tput AF 7    )
 
-        onblue=$(   tput setab 4 || tput AB 4    )
-        ongrey=$(   tput setab 7 || tput AB 7    )
-      }
-    } 2>/dev/null ||:
-
-    # osx's termcap doesn't have italics. The below adds support for iTerm2
-    # and is harmless on Terminal.app
-    [ "$(get_platform)" = "osx" ] && {
-      italic=$(echo -e "\033[3m")
-      eitalic=$(echo -e "\033[23m")
+      onblue=$(   tput setab 4 || tput AB 4    )
+      ongrey=$(   tput setab 7 || tput AB 7    )
     }
+  } 2>/dev/null ||:
 
-  fi
+  # osx's termcap doesn't have italics. The below adds support for iTerm2
+  # and is harmless on Terminal.app
+  [ "$(get_platform)" = "osx" ] && {
+    italic=$(echo -e "\033[3m")
+    eitalic=$(echo -e "\033[23m")
+  }
+ export black blue bold cyan default eitalic green italic magenta onblue ongrey red reset under white yellow
 }
 
 function get_platform () {
@@ -263,14 +265,18 @@ function get_platform () {
 }
 
 ## Run this town... code!
-# set_env_label
-# set_shell_prompt
-init_term_cmds
+if [ -f "$(which tput 2>/dev/null)" ]; then
+  # set_env_label
+  # set_shell_prompt
+  init_term_cmds
+fi
 
-# PS1='\[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
-export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-export PS1="${yellow}\H${white}@${green}\u${white}: ${cyan}\w${white}\$ ${reset}"
-
+if [ -z "$ZSH" ]; then
+  # PS1='\[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
+  # export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
+  [ $UID == "0" ] && user_color=$red || user_color=$green
+  export PS1="${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$ ${reset}"
+fi
 
 
 ### === END DAN'S ALIASES === ###
