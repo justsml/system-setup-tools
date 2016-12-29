@@ -18,7 +18,7 @@ mkdir -p \
 
 DEBIAN_FRONTEND=noninteractive \
  apt-get update && \
- apt-get install sudo -y --allow-downgrades 
+ apt-get install sudo net-tools curl -y --allow-downgrades 
  
 ## SETUP Base Pkgs
 sudo DEBIAN_FRONTEND=noninteractive \
