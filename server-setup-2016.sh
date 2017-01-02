@@ -24,16 +24,17 @@ mkdir -p \
   /data/drone/etc/drone \
   /data/{redis,mongodb,logs,rancher,registry,_shared}
 
+# Add Sudo in case it's missing
 DEBIAN_FRONTEND=noninteractive \
  apt-get update && \
- apt-get install sudo net-tools curl -y --allow-downgrades 
+ apt-get install sudo curl -y --allow-downgrades 
  
 ## SETUP Base Pkgs
 sudo DEBIAN_FRONTEND=noninteractive \
  apt-get update && \
  apt-get dist-upgrade -y && \
  apt-get install -y --allow-downgrades \
-    bash-completion dialog \
+    bash-completion dialog net-tools \
     curl wget vim-nox openssl pv iotop htop \
     apt-transport-https ca-certificates strace ltrace fail2ban \
     parted sshfs aufs-tools zfs nfs-common 
@@ -63,18 +64,18 @@ if [ "$(which docker)" == "" ]; then
 fi
 
 if [ "$INSTALL_ZEROTIER" != "" ]; then 
-  ## SETUP ZEROTIER
+  ## SETUP ZEROTIER - OPTIONAL PRIVATE VPN LAYER
   curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/zero-tier.sh | bash
 fi
 
 function genSshId () {
-  printf '\n\n\n******* START: SSH PUB KEY ********* \n\n\n'
-  if [ ! -f /root/.ssh/id_ed25519 ]; then
-     DEBIAN_FRONTEND=noninteractive ssh-keygen -N '' -t ed25519 -f /root/.ssh/id_ed25519
+  if [ ! -f $HOME/.ssh/id_ed25519 ]; then
+     DEBIAN_FRONTEND=noninteractive ssh-keygen -N '' -t ed25519 -f $HOME/.ssh/id_ed25519
   fi
 
-  if [ -f /root/.ssh/id_ed25519.pub ]; then
-    cat /root/.ssh/id_ed25519.pub
+  printf '\n\n\n******* START: SSH PUB KEY ********* \n\n\n'
+  if [ -f $HOME/.ssh/id_ed25519.pub ]; then
+    cat $HOME/.ssh/id_ed25519.pub
   else
     printf '\n\n\nCRITICAL ERROR: NO ED25519 SSH KEY FOUND\n\n\n' >&2
   fi
@@ -148,9 +149,8 @@ serverSystemTuning
 
 if [ ! -f "$HOME/.ssh/id_rsa" ]; then
   printf '\n\n### Attempting SSH Key Check & AutoGenerator \n'
-  curl -L https://github.com/justsml/system-setup-tools/raw/master/modules/ssh-key-generator.sh | HOME_DIR=/root bash
+  curl -L https://github.com/justsml/system-setup-tools/raw/master/modules/ssh-key-generator.sh | HOME_DIR=$HOME bash
+  printf   '\n### DONEL SSH Check \n'
 fi
-printf   '\n### DONEL SSH Check \n'
 
 printf '\n\n ******* DONE: SERVER-SETUP-2016 ******* \n\n'
-
