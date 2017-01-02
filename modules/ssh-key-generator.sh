@@ -53,7 +53,7 @@ else
 fi
 
 # Try fix ownership + permissions
-sudo chown -Rfv $user_name: $home_dir/.ssh
+sudo chown -Rfv $user_name $home_dir/.ssh
 sudo chmod -Rf 600 $home_dir/.ssh
 sudo chmod -Rf 644 $home_dir/.ssh/*.pub
 
