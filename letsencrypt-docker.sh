@@ -17,7 +17,7 @@ else
             -v "/etc/letsencrypt:/etc/letsencrypt" \
             -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
             quay.io/letsencrypt/letsencrypt:latest certonly \
-            standalone --noninteractive \
+            --standalone --noninteractive \
             --expand --allow-subset-of-names \
             --agree-tos --rsa-key-size 2048 \
             --email postmaster@$first_domain \
