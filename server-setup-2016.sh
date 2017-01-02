@@ -113,12 +113,14 @@ HEREDOC
   fi
   
   ## ADD CGROUP STUFF TO GRUB
+  # Ref: https://docs.docker.com/engine/installation/linux/ubuntulinux/#/enable-memory-and-swap-accounting
+  # And: https://wiki.debian.org/systemd#Missing_startup_messages_on_console.28tty1.29_after_the_boot
   if [ -f "/etc/default/grub" ]; then
     if [ "$(grep 'cgroup_enable=memory' /etc/default/grub 2>/dev/null)" == "" ]; then 
       if [ "$(grep 'GRUB_CMDLINE_LINUX' /etc/default/grub)" == "" ]; then 
-        echo 'GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"' >> /etc/default/grub
+        echo 'GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 systemd.show_status=1 "' >> /etc/default/grub
       else
-        sudo sed -i 's/\(GRUB_CMDLINE_LINUX_DEFAULT="\)/\1cgroup_enable=memory swapaccount=1 /' /etc/default/grub 
+        sudo sed -i 's/\(GRUB_CMDLINE_LINUX_DEFAULT="\)/\1cgroup_enable=memory swapaccount=1 systemd.show_status=1 /' /etc/default/grub 
       fi
       sudo update-grub
       printf "\n### *** UPDATED GRUB W/ CGROUPS *** ###\n\n\n"
