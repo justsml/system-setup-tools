@@ -1,11 +1,5 @@
 # system-setup-tools
 
-## Setup [Secure RSA](https://github.com/justsml/system-setup-tools/blob/master/modules/ssh-key-generator.sh#L45) & [ED25519 Keys](https://github.com/justsml/system-setup-tools/blob/master/modules/ssh-key-generator.sh#L37)
-
-```sh
-curl -L https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/ssh-key-generator.sh | bash
-```
-
 ## Setup Docker Host Server
 Tested on Ubuntu 16.04+, Debian 7, 8, 9.
 
@@ -21,3 +15,38 @@ Tested on Ubuntu 16.04+, Debian 7, 8, 9.
 ```sh
 curl -L https://github.com/justsml/system-setup-tools/raw/master/server-setup-2016.sh | bash
 ```
+
+
+--------------------------------
+
+--------------------------------
+
+
+## Setup [Secure RSA](https://github.com/justsml/system-setup-tools/blob/master/modules/ssh-key-generator.sh#L45) & [ED25519 Keys](https://github.com/justsml/system-setup-tools/blob/master/modules/ssh-key-generator.sh#L37)
+
+```sh
+curl -L https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/ssh-key-generator.sh | bash
+```
+
+--------------------------------
+
+## 2 Steps: Get my `Bash on Steroids` .Env Scripts
+
+#### 1. PRE REQ / PRE INSTALL
+
+**Debian/Ubuntu:**
+`apt-get update && apt-get install -y curl pv wget sudo apt-transport-https ca-certificates`
+
+**OSX:**
+`brew update && brew install curl pv wget`
+
+**Windows:**
+['upgrade'](https://google.com/search?q=install+ubuntu)
+
+### Choose between:
+
+#### 2a. APPEND bashrc & bash_aliases (Klunky, needs cleanup in post...) 
+`curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc    &&    curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases`
+#### 2b. OVERWRITE existing scripts
+`curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc > ~/.bashrc    &&    curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases > ~/.bash_aliases`
+
