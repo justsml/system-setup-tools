@@ -43,10 +43,18 @@ curl -L https://raw.githubusercontent.com/justsml/system-setup-tools/master/modu
 **Windows:**
 ['upgrade'](https://google.com/search?q=install+ubuntu)
 
+#### 2. Backup Current Scripts:
+
+```sh
+BACK_DIR=~/backups/profile-`date +%F`
+mkdir -p $BACK_DIR
+cp -ra ~/.bash* $BACK_DIR
+```
+
 ### Choose between:
 
-#### 2a. APPEND bashrc & bash_aliases (Klunky, needs cleanup in post...) 
+#### 3a. APPEND bashrc & bash_aliases (Klunky, needs cleanup in post...) 
 `curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc    &&    curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases`
-#### 2b. OVERWRITE existing scripts
+#### 3b. OVERWRITE existing scripts, (don't lose existing env vars you may need, see step ##2: Backup)
 `curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc > ~/.bashrc    &&    curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases > ~/.bash_aliases`
 
