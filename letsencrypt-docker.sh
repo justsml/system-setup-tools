@@ -2,9 +2,9 @@
 set -e
 
 # USAGE
-# export HOSTNAMES=danlevy.net,www.danlevy.net,app.danlevy.net && curl -L https://raw.githubusercontent.com/justsml/system-setup-tools/master/letsencrypt-docker.sh | DOMAIN_CSV_LIST="$HOSTNAMES" bash
+# export HOSTNAMES=danlevy.net,www.danlevy.net,app.danlevy.net && curl -L https://raw.githubusercontent.com/justsml/system-setup-tools/master/letsencrypt-docker.sh | HOSTNAMES="$HOSTNAMES" bash
 
-domain_list=${DOMAIN_CSV_LIST-"`hostname -f`"}
+domain_list=${HOSTNAMES-"`hostname -f`"}
 first_domain=$(echo $domain_list | sed 's/,/\n/g' | head -n 1)
 
 if [ -d "/etc/letsencrypt/live/$first_domain" ]; then
