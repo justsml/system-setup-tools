@@ -1,9 +1,9 @@
 # system-setup-tools
 
-## Setup Docker Host Server
+## Docker Host Server Setup
 Tested on Ubuntu 16.04+, Debian 7, 8, 9.
 
-1. Add SSH Keys - You should configure this for your keys ;) 
+1. Add SSH Keys to authorized_keys for current user (root, i know, send a PR) - You should configure this for your keys ;) 
 1. Sets up common dependencies (nfs, zfs, aufs, curl, openssl, vim)
 1. If not already installed, install Docker
 1. If needed, it creates new id_rsa & id_ed25519 keys
@@ -16,8 +16,12 @@ Tested on Ubuntu 16.04+, Debian 7, 8, 9.
 curl -L https://github.com/justsml/system-setup-tools/raw/master/server-setup-2016.sh | bash
 ```
 
-
 --------------------------------
+
+> #### Post 'Docker Host Server Setup' - SSL & a Secure Rancher Server
+
+1. [Get Free Working SSL Cert(s) w/ Letsencrypt](https://github.com/justsml/system-setup-tools/blob/master/letsencrypt-docker.sh) 
+1. [Setup HTTPS Rancher Server](https://github.com/justsml/ssl-proxy#example-for-a-rancher-server)
 
 --------------------------------
 
