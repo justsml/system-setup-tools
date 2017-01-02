@@ -53,8 +53,8 @@ else
 fi
 
 # Try fix ownership + permissions
-sudo chown $user_name: -Rfc $home_dir/.ssh
-sudo chmod 600 -Rf $home_dir/.ssh
-sudo chmod 644 -Rf $home_dir/.ssh/*.pub
+sudo chown -Rfv $user_name: $home_dir/.ssh
+sudo chmod -Rf 600 $home_dir/.ssh
+sudo chmod -Rf 644 $home_dir/.ssh/*.pub
 
 printf '\n******* DONE: GEN/SHOW SSH PUB KEY ********* \n\n'
