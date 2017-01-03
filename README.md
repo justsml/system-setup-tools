@@ -34,7 +34,7 @@ curl -L https://raw.githubusercontent.com/justsml/system-setup-tools/master/modu
 
 --------------------------------
 
-## 2 Steps: Get my `Bash on Steroids` .Env Scripts
+## 3 Steps: Get my `Bash on Steroids` .Env Scripts
 
 #### 1. PRE REQ / PRE INSTALL
 
