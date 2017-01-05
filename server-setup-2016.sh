@@ -88,6 +88,12 @@ function enableSSHKeepAlive () {
   fi
 }
 
+function setupDHParam () {
+  if [ ! -f "/certs/dhparam.pem" ]; then
+   sudo openssl dhparam -out /certs/dhparam.pem 2048
+ fi
+}
+
 function serverSystemTuning () {
   if [ "$(egrep "mem_max.?=.?[0-9]{7,}" /etc/sysctl.conf)" == "" ]; then
     cat << HEREDOC >> /etc/sysctl.conf
@@ -145,6 +151,7 @@ HEREDOC
 
 genSshId
 enableSSHKeepAlive
+setupDHParam
 serverSystemTuning
 
 if [ ! -f "$HOME/.ssh/id_rsa" ]; then
