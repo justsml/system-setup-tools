@@ -102,126 +102,31 @@ alias hs='history | grep --color=auto'
 alias hsx='history | egrep --color=auto'
 alias netlisteners='lsof -i -P | grep LISTEN'
 #identify and search for active network connections
-# netspy() { lsof -i -P +c 0 +M | grep -i "$1" }
+netspy() { lsof -i -P +c 0 +M | grep -i "$1" }
 # Extract almost any compressed format
-# extractall () {
-#   if [ -f $1 ] ; then
-#     case $1 in
-#       *.tar.bz2)   tar xjf $1     ;;
-#       *.tar.gz)    tar xzf $1     ;;
-#       *.bz2)       bunzip2 $1     ;;
-#       *.rar)       unrar e $1     ;;
-#       *.gz)        gunzip $1      ;;
-#       *.tar)       tar xf $1      ;;
-#       *.tbz2)      tar xjf $1     ;;
-#       *.tgz)       tar xzf $1     ;;
-#       *.zip)       unzip $1       ;;
-#       *.Z)         uncompress $1  ;;
-#       *.7z)        7z x $1        ;;
-#       *)     echo "'$1' cannot be extracted via extractall()" ;;
-#      esac
-#   else
-#      echo "'$1' is not a valid file"
-#   fi
-# }
+extractall () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1     ;;
+      *.tar.gz)    tar xzf $1     ;;
+      *.bz2)       bunzip2 $1     ;;
+      *.rar)       unrar e $1     ;;
+      *.gz)        gunzip $1      ;;
+      *.tar)       tar xf $1      ;;
+      *.tbz2)      tar xjf $1     ;;
+      *.tgz)       tar xzf $1     ;;
+      *.zip)       unzip $1       ;;
+      *.Z)         uncompress $1  ;;
+      *.7z)        7z x $1        ;;
+      *)     echo "'$1' cannot be extracted via extractall()" ;;
+     esac
+  else
+     echo "'$1' is not a valid file"
+  fi
+}
 
 # #Reconnect or start a tmux or screen session over ssh
 # shux () { ssh -t "$1" 'tmux attach || tmux new || screen -DR'; }
-
-
-# if [ "$ZSH" != "" ]; then
-#   exit 0
-# fi
-
-# # *** Add Named Colors
-# # (credit: SiegeX - http://stackoverflow.com/questions/4332478/read-the-current-text-color-in-a-xterm/4332530#4332530 )
-# #   Examples:
-# #     printf "%40s\n" "${BLUE}This text is blue${NORMAL}"
-# #     echo "${RED}this is red ${NORMAL}this is normal"
-# BLACK=$(tput setaf 0)
-# BLUE=$(tput setaf 4)
-# #BRIGHT=$(tput bold)
-# CYAN=$(tput setaf 6)
-# GREEN=$(tput setaf 2)
-# LIME_YELLOW=$(tput setaf 190)
-# MAGENTA=$(tput setaf 5)
-# NORMAL=$(tput sgr0)
-# POWDER_BLUE=$(tput setaf 153)
-# RED=$(tput setaf 1)
-# WHITE=$(tput setaf 7)
-# YELLOW=$(tput setaf 3)
-# # Font styles:
-# BLINK=$(tput blink)
-# REVERSE=$(tput smso)
-# UNDERLINE=$(tput smul)
-
-# function set_env_label () {
-#   ### Get Env Name - uses first val:
-#   # VALID ENV's: [production, staging, test, qa, development] - Default = development
-#   ENV_NAME=$RUBY_ENV     # Check RUBY
-#   [ -z "$ENV_NAME" ] && ENV_NAME=$NODE_ENV
-#   [ -z "$ENV_NAME" ] && ENV_NAME=$RACK_ENV
-#   [ -z "$ENV_NAME" ] && ENV_NAME=$PHP_ENV
-#   [ -z "$ENV_NAME" ] && ENV_NAME=$GO_ENV
-#   [ -z "$ENV_NAME" ] && ENV_NAME="NO_ENV"
-
-#   # printf "\n\n\t****\nENV_NAME: $ENV_NAME\n\n"
-
-# # TRANSFORM INTO DISPLAY VALUE
-#   [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL=" LIVE " && ENV_LABEL="${RED}$ENV_LABEL"
-#   [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="DEV" && ENV_LABEL="${MAGENTA}$ENV_LABEL"
-#   [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="STAGING" && ENV_LABEL="${LIME_YELLOW}$ENV_LABEL"
-#   [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="TEST" && ENV_LABEL="${CYAN}$ENV_LABEL"
-#   [[ "$ENV_NAME" =~ ^"qa".* ]]   && ENV_LABEL="QA" && ENV_LABEL="${POWDER_BLUE}$ENV_LABEL"
-#   [[ "$ENV_NAME" =~ ^"NULL".* ]] && ENV_LABEL="NO_ENV" && ENV_LABEL="${RED}$ENV_LABEL"
-#   export ENV_NAME="$ENV_NAME"
-#   export ENV_LABEL="$ENV_LABEL"
-# }
-
-# function set_shell_prompt () {
-#   ## e.g. export PS1="${CYAN}$ENV_LABEL :: ${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
-#   ### *** SHELL PROMPT COLOR (root & non-root)
-#   if [[ "$OSX" == "true" ]]; then
-#     # export PS1="${GREEN} \h ${NORMAL} : ${YELLOW}\W ${MAGENTA}\u\$${NORMAL} "
-#     lbl_env="${WHITE}/${GREEN}$ENV_LABEL${WHITE}/"
-#     lbl_host="${YELLOW}$(hostname)${NORMAL}:"
-#     lbl_path="${BLUE}$(basename $PWD)"
-#     if [[ "$UID" == "0" ]]; then
-#       lbl_user="${RED}ROOT${YELLOW}@"
-#     else
-#       lbl_user="${MAGENTA}$USER${RED}@"
-#     fi
-#     export PS1="$lbl_env $lbl_user$lbl_host $lbl_path#${NORMAL} "
-#   elif [[ "$UID" == "0" ]]; then
-#     # So, we's root
-#     # Prior ver: export PS1="\[\e[31m\]$ENV_NAME\[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
-#     export PS1="${MAGENTA}$ENV_LABEL${WHITE}=${RED}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
-#   else
-#     export PS1="${CYAN}$ENV_LABEL::${GREEN}\u${NORMAL}@${POWDER_BLUE}\h${NORMAL}: ${YELLOW}\$ ${NORMAL} "
-#   fi
-# }
-
-# ## Helper Functions ##
-# function get_env_label () {
-#   ### Get Env Name - uses first val:
-#   # VALID ENV's: [production, staging, test, qa, development] - Default = development
-#   ENV_NAME=$RUBY_ENV     # Check RUBY
-#   ENV_NAME=${ENV_NAME:=$RACK_ENV}     # Check RACK
-#   ENV_NAME=${ENV_NAME:=$RUST_ENV}     # Check NODE
-#   ENV_NAME=${ENV_NAME:=$NODE_ENV}     # Check NODE
-#   ENV_NAME=${ENV_NAME:=$PHP_ENV}      # Check Phfffp
-#   ENV_NAME=${ENV_NAME:=$GO_ENV}       # Check GO
-#   ENV_NAME=${ENV_NAME:="development"} # Fallback to 'development'
-
-#   # TRANSFORM INTO DISPLAY VALUE
-#   [[ "$ENV_NAME" =~ ^"pro".* ]]  && ENV_LABEL="${RED}[LIVE] "
-#   [[ "$ENV_NAME" =~ ^"dev".* ]]  && ENV_LABEL="${MAGENTA}DEV "
-#   [[ "$ENV_NAME" =~ ^"sta".* ]]  && ENV_LABEL="${LIME_YELLOW}PRE "
-#   [[ "$ENV_NAME" =~ ^"tes".* ]]  && ENV_LABEL="${CYAN}TEST "
-#   [[ "$ENV_NAME" =~ ^"qa".* ]]   && ENV_LABEL="${POWDER_BLUE}QA "
-#   export ENV_LABEL="$ENV_LABEL"
-#   #return $ENV_LABEL
-# }
 
 # credit: http://mywiki.wooledge.org/BashFAQ/037
 function init_term_cmds () {
@@ -255,8 +160,9 @@ function init_term_cmds () {
   [ "$(get_platform)" = "osx" ] && {
     italic=$(echo -e "\033[3m")
     eitalic=$(echo -e "\033[23m")
-  }
- export back black blue bold cyan default eitalic green italic magenta onblue ongrey red reset under white yellow
+  } ||:
+  
+  export back black blue bold cyan default eitalic green italic magenta onblue ongrey red reset under white yellow
 }
 
 function get_platform () {
