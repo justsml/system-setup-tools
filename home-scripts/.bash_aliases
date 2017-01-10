@@ -190,7 +190,7 @@ if [ -z "$ZSH" ]; then
   else
     user_color=$green
   fi
-  export PS1="${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$ ${reset}"
+  export PS1="${reset}${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$${reset} "
 fi
 
 ### === END DAN'S ALIASES === ###
