@@ -102,28 +102,28 @@ alias hs='history | grep --color=auto'
 alias hsx='history | egrep --color=auto'
 alias netlisteners='lsof -i -P | grep LISTEN'
 #identify and search for active network connections
-netspy() { lsof -i -P +c 0 +M | grep -i "$1" }
+# netspy() { lsof -i -P +c 0 +M | grep -i "$1" }
 # Extract almost any compressed format
-extractall () {
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1     ;;
-      *.tar.gz)    tar xzf $1     ;;
-      *.bz2)       bunzip2 $1     ;;
-      *.rar)       unrar e $1     ;;
-      *.gz)        gunzip $1      ;;
-      *.tar)       tar xf $1      ;;
-      *.tbz2)      tar xjf $1     ;;
-      *.tgz)       tar xzf $1     ;;
-      *.zip)       unzip $1       ;;
-      *.Z)         uncompress $1  ;;
-      *.7z)        7z x $1        ;;
-      *)     echo "'$1' cannot be extracted via extractall()" ;;
-     esac
-  else
-     echo "'$1' is not a valid file"
-  fi
-}
+# extractall () {
+#   if [ -f $1 ] ; then
+#     case $1 in
+#       *.tar.bz2)   tar xjf $1     ;;
+#       *.tar.gz)    tar xzf $1     ;;
+#       *.bz2)       bunzip2 $1     ;;
+#       *.rar)       unrar e $1     ;;
+#       *.gz)        gunzip $1      ;;
+#       *.tar)       tar xf $1      ;;
+#       *.tbz2)      tar xjf $1     ;;
+#       *.tgz)       tar xzf $1     ;;
+#       *.zip)       unzip $1       ;;
+#       *.Z)         uncompress $1  ;;
+#       *.7z)        7z x $1        ;;
+#       *)     echo "'$1' cannot be extracted via extractall()" ;;
+#      esac
+#   else
+#      echo "'$1' is not a valid file"
+#   fi
+# }
 
 # #Reconnect or start a tmux or screen session over ssh
 # shux () { ssh -t "$1" 'tmux attach || tmux new || screen -DR'; }
