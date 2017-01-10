@@ -131,7 +131,7 @@ alias netlisteners='lsof -i -P | grep LISTEN'
 # credit: http://mywiki.wooledge.org/BashFAQ/037
 function init_term_cmds () {
   # only set if we're on an interactive session
-  [[ -t 2 ]] && {
+  if [[ -t 2 ]]; then
     reset=$(    tput sgr0   || tput me      ) # Reset cursor
     bold=$(     tput bold   || tput md      ) # Start bold
     under=$(    tput smul   || tput us      ) # Start underline
@@ -140,7 +140,7 @@ function init_term_cmds () {
     default=$(  tput op                     )
     back=$'\b'
 
-    [[ $TERM != *-m ]] && {
+    if [[ $TERM != *-m ]]; then
       black=$(    tput setaf 0 || tput AF 0    )
       red=$(      tput setaf 1 || tput AF 1    )
       green=$(    tput setaf 2 || tput AF 2    )
@@ -152,15 +152,15 @@ function init_term_cmds () {
 
       onblue=$(   tput setab 4 || tput AB 4    )
       ongrey=$(   tput setab 7 || tput AB 7    )
-    }
-  } 2>/dev/null ||:
+    fi
+  fi
 
   # osx's termcap doesn't have italics. The below adds support for iTerm2
   # and is harmless on Terminal.app
-  [ "$(get_platform)" = "osx" ] && {
+  if [ "$(get_platform)" == "osx" ]; then
     italic=$(echo -e "\033[3m")
     eitalic=$(echo -e "\033[23m")
-  } ||:
+  fi
   
   export back black blue bold cyan default eitalic green italic magenta onblue ongrey red reset under white yellow
 }
