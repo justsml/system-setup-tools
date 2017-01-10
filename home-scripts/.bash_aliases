@@ -32,7 +32,7 @@ if [ -f "$(which chkconfig 2>/dev/null)" ]; then
   alias service-list="chkconfig --list | grep '3:on'"
   alias services-all="chkconfig --list | grep '3:on'"
 fi
-if [ "$(uname)" == "Darwin" ]; then
+if [[ $KERNEL_NAME =~ ^"Darwin" ]]; then
   alias service-list="echo 'Haha, good luck with launchctl'"
   alias services-all="echo 'Haha, good luck with launchctl'"
 else
