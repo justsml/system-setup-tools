@@ -75,7 +75,7 @@ function genSshId () {
 
   printf '\n\n\n******* START: SSH PUB KEY ********* \n\n\n'
   if [ -f $HOME/.ssh/id_ed25519.pub ]; then
-    cat $HOME/.ssh/id_ed25519.pub
+    printf "\nSSH KEY: $(cat $HOME/.ssh/id_ed25519.pub)\n\n\n"
   else
     printf '\n\n\nCRITICAL ERROR: NO ED25519 SSH KEY FOUND\n\n\n' >&2
   fi
@@ -84,7 +84,7 @@ function genSshId () {
 
 function enableSSHKeepAlive () {
   if [ "$(grep ClientAliveCountMax /etc/ssh/sshd_config)" == "" ]; then
-    printf "\nClientAliveInterval 120\nClientAliveCountMax 5" >> /etc/ssh/sshd_config
+    printf "\nClientAliveInterval 50\nClientAliveCountMax 5\n" >> /etc/ssh/sshd_config
   fi
 }
 
@@ -92,6 +92,21 @@ function setupDHParam () {
   if [ ! -f "/certs/dhparam.pem" ]; then
    sudo openssl dhparam -out /certs/dhparam.pem 2048
  fi
+}
+
+function setupLimits() {
+  if [ ! -f "/etc/security/limits.conf" ]; then
+    cat << HEREDOC >> /etc/security/limits.conf
+soft nofile 8192
+hard nofile 8192
+HEREDOC
+  fi
+  if [ "$(egrep "soft nofile" /etc/security/limits.conf)" == "" ]; then
+    echo "soft nofile 8192" >> /etc/security/limits.conf
+  fi
+  if [ "$(egrep "hard nofile" /etc/security/limits.conf)" == "" ]; then
+    echo "hard nofile 8192" >> /etc/security/limits.conf
+  fi  
 }
 
 function serverSystemTuning () {
@@ -104,19 +119,38 @@ net.core.wmem_max = 16777216
 HEREDOC
   fi
 
-  if [ "$(egrep "tcp_max_syn_backlog.?=.?[0-9]{4,}" /etc/sysctl.conf)" == "" ]; then
+  if [ "$(egrep "tcp_syncookies" /etc/sysctl.conf)" == "" ]; then
     cat << HEREDOC >> /etc/sysctl.conf
-# Increase the number of outstanding syn requests allowed.
-# c.f. The use of syncookies.
-net.ipv4.tcp_max_syn_backlog = 4096
 net.ipv4.tcp_syncookies = 1
+HEREDOC
+  fi
+
+# Credit: https://www.linode.com/docs/websites/nginx/configure-nginx-for-optimized-performance
+  if [ "$(egrep "tcp_max_tw_buckets" /etc/sysctl.conf)" == "" ]; then
+    cat << HEREDOC >> /etc/sysctl.conf
+net.ipv4.tcp_max_tw_buckets = 1440000
+HEREDOC
+  fi
+  if [ "$(egrep "net.ipv4.tcp_fin_timeout" /etc/sysctl.conf)" == "" ]; then
+    cat << HEREDOC >> /etc/sysctl.conf
+net.ipv4.tcp_fin_timeout = 15
+HEREDOC
+  fi
+  if [ "$(egrep "net.ipv4.tcp_window_scaling" /etc/sysctl.conf)" == "" ]; then
+    cat << HEREDOC >> /etc/sysctl.conf
+net.ipv4.tcp_window_scaling = 1
+HEREDOC
+  fi
+  if [ "$(egrep "net.ipv4.tcp_max_syn_backlog" /etc/sysctl.conf)" == "" ]; then
+    cat << HEREDOC >> /etc/sysctl.conf
+net.ipv4.tcp_max_syn_backlog = 3240000
 HEREDOC
   fi
 
   if [ "$(egrep "somaxconn.?=.?[0-9]{4,}" /etc/sysctl.conf)" == "" ]; then
   cat << HEREDOC >> /etc/sysctl.conf
 # The maximum number of "backlogged sockets".  Default is 128.
-net.core.somaxconn = 1024
+net.core.somaxconn = 65535
 net.ipv4.ip_local_port_range = 1024 65535
 HEREDOC
   fi
@@ -153,6 +187,7 @@ genSshId
 enableSSHKeepAlive
 setupDHParam
 serverSystemTuning
+setupLimits
 
 if [ ! -f "$HOME/.ssh/id_rsa" ]; then
   printf '\n\n### Attempting SSH Key Check & AutoGenerator \n'
