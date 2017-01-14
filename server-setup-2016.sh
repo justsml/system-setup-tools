@@ -150,7 +150,6 @@ net.ipv4.tcp_syncookies = 1
 net.ipv4.tcp_syn_retries = 2
 net.ipv4.tcp_synack_retries = 2
 net.ipv4.tcp_max_syn_backlog = 8192
-net.ipv4.tcp_fin_timeout = 8
 HEREDOC
   fi
 # Credit: https://www.linode.com/docs/websites/nginx/configure-nginx-for-optimized-performance
@@ -161,7 +160,7 @@ HEREDOC
   fi
   if [ "$(egrep "net.ipv4.tcp_fin_timeout" /etc/sysctl.conf)" == "" ]; then
     cat << HEREDOC >> /etc/sysctl.conf
-net.ipv4.tcp_fin_timeout = 15
+net.ipv4.tcp_fin_timeout = 10
 HEREDOC
   fi
   if [ "$(egrep "net.ipv4.tcp_window_scaling" /etc/sysctl.conf)" == "" ]; then
