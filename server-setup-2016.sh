@@ -23,7 +23,11 @@ mkdir -p \
   /data/drone/var/lib/drone \
   /data/drone/opt/rancher \
   /data/drone/etc/drone \
-  /data/{redis,mongodb,logs,rancher,registry,_shared}
+  /data/{redis,mongodb,logs,rancher,registry,certs}
+
+if [ ! -d /certs ]; then
+  ln -sf /data/certs /certs
+fi
 
 # Add Sudo in case it's missing
 DEBIAN_FRONTEND=noninteractive \
