@@ -102,15 +102,17 @@ function setupDHParam () {
 function setupLimits () {
   if [ ! -f "/etc/security/limits.conf" ]; then
     cat << HEREDOC >> /etc/security/limits.conf
-soft nofile 65535
-hard nofile 65535
+* soft     nofile         65535
+* hard     nofile         65535
+* soft     nproc          65535
+* hard     nproc          65535
 HEREDOC
   fi
   if [ "$(egrep "soft nofile" /etc/security/limits.conf)" == "" ]; then
-    echo "soft nofile 65535" >> /etc/security/limits.conf
+    echo "* soft nofile 65535" >> /etc/security/limits.conf
   fi
   if [ "$(egrep "hard nofile" /etc/security/limits.conf)" == "" ]; then
-    echo "hard nofile 65535" >> /etc/security/limits.conf
+    echo "* hard nofile 65535" >> /etc/security/limits.conf
   fi  
 }
 
