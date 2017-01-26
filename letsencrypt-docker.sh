@@ -8,12 +8,12 @@ domain_list=${HOSTNAMES-"`hostname -f`"}
 first_domain=$(echo $domain_list | sed 's/,/\n/g' | head -n 1)
 
 if [ -d "/etc/letsencrypt/live/$first_domain" ]; then
-  docker run -it --rm -p 443:443 -p 80:80 --name certbot \
+  docker run -i --rm -p 443:443 -p 80:80 --name certbot \
             -v "/etc/letsencrypt:/etc/letsencrypt" \
             -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
             quay.io/letsencrypt/letsencrypt:latest renew
 else
-  docker run -it --rm -p 443:443 -p 80:80 --name certbot \
+  docker run -i --rm -p 443:443 -p 80:80 --name certbot \
             -v "/etc/letsencrypt:/etc/letsencrypt" \
             -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
             quay.io/letsencrypt/letsencrypt:latest certonly \
