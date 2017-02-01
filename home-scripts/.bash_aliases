@@ -132,12 +132,12 @@ alias netlisteners='lsof -i -P | grep LISTEN'
 function init_term_cmds () {
   # only set if we're on an interactive session
   if [[ -t 2 ]]; then
-    reset=$(    tput sgr0   || tput me      ) # Reset cursor
-    bold=$(     tput bold   || tput md      ) # Start bold
-    under=$(    tput smul   || tput us      ) # Start underline
-    italic=$(   tput sitm   || tput ZH      ) # Start italic
-    eitalic=$(  tput ritm   || tput ZH      ) # End italic
-    default=$(  tput op                     )
+    reset=$(    tput sgr0   || tput me 2&>/dev/null) # Reset cursor
+    bold=$(     tput bold   || tput md 2&>/dev/null) # Start bold
+    under=$(    tput smul   || tput us 2&>/dev/null) # Start underline
+    italic=$(   tput sitm   || tput ZH 2&>/dev/null) # Start italic
+    eitalic=$(  tput ritm   || tput ZH 2&>/dev/null) # End italic
+    default=$(  tput op                2&>/dev/null)
     back=$'\b'
 
     if [[ $TERM != *-m ]]; then
