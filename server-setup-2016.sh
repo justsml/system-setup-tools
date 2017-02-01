@@ -203,7 +203,7 @@ HEREDOC
       if [ "$(grep 'GRUB_CMDLINE_LINUX' /etc/default/grub)" == "" ]; then 
         echo 'GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 systemd.show_status=1 "' >> /etc/default/grub
       else
-        sudo sed -i 's/\(GRUB_CMDLINE_LINUX_DEFAULT="\)/\1cgroup_enable=memory swapaccount=1 systemd.show_status=1 /' /etc/default/grub 
+        sudo sed -i 's/\(GRUB_CMDLINE_LINUX="\)/\1cgroup_enable=memory swapaccount=1 systemd.show_status=1 /' /etc/default/grub 
       fi
       sudo update-grub
       printf "\n### *** UPDATED GRUB W/ CGROUPS *** ###\n\n\n"
