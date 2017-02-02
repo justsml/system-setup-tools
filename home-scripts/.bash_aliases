@@ -132,26 +132,26 @@ alias netlisteners='lsof -i -P | grep LISTEN'
 function init_term_cmds () {
   # only set if we're on an interactive session
   if [[ -t 2 ]]; then
-    reset=$(    tput sgr0   || tput me 2&>/dev/null) # Reset cursor
-    bold=$(     tput bold   || tput md 2&>/dev/null) # Start bold
-    under=$(    tput smul   || tput us 2&>/dev/null) # Start underline
-    italic=$(   tput sitm   || tput ZH 2&>/dev/null) # Start italic
-    eitalic=$(  tput ritm   || tput ZH 2&>/dev/null) # End italic
-    default=$(  tput op                2&>/dev/null)
+    reset=$(    tput sgr0   || tput me 2>/dev/null) # Reset cursor
+    bold=$(     tput bold   || tput md 2>/dev/null) # Start bold
+    under=$(    tput smul   || tput us 2>/dev/null) # Start underline
+    italic=$(   tput sitm   || tput ZH 2>/dev/null) # Start italic
+    eitalic=$(  tput ritm   || tput ZH 2>/dev/null) # End italic
+    default=$(  tput op                2>/dev/null)
     back=$'\b'
 
     if [[ $TERM != *-m ]]; then
-      black=$(    tput setaf 0 || tput AF 0    )
-      red=$(      tput setaf 1 || tput AF 1    )
-      green=$(    tput setaf 2 || tput AF 2    )
-      yellow=$(   tput setaf 3 || tput AF 3    )
-      blue=$(     tput setaf 4 || tput AF 4    )
-      magenta=$(  tput setaf 5 || tput AF 5    )
-      cyan=$(     tput setaf 6 || tput AF 6    )
-      white=$(    tput setaf 7 || tput AF 7    )
+      black=$(    tput setaf 0 || tput AF 0    2>/dev/null)
+      red=$(      tput setaf 1 || tput AF 1    2>/dev/null)
+      green=$(    tput setaf 2 || tput AF 2    2>/dev/null)
+      yellow=$(   tput setaf 3 || tput AF 3    2>/dev/null)
+      blue=$(     tput setaf 4 || tput AF 4    2>/dev/null)
+      magenta=$(  tput setaf 5 || tput AF 5    2>/dev/null)
+      cyan=$(     tput setaf 6 || tput AF 6    2>/dev/null)
+      white=$(    tput setaf 7 || tput AF 7    2>/dev/null)
 
-      onblue=$(   tput setab 4 || tput AB 4    )
-      ongrey=$(   tput setab 7 || tput AB 7    )
+      onblue=$(   tput setab 4 || tput AB 4    2>/dev/null)
+      ongrey=$(   tput setab 7 || tput AB 7    2>/dev/null)
     fi
   fi
 
