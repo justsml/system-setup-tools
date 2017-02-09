@@ -29,20 +29,16 @@ if [ ! -d /certs ]; then
   ln -sf /data/certs /certs
 fi
 
-# Add Sudo in case it's missing
+# Add Required Packages
 DEBIAN_FRONTEND=noninteractive \
  apt-get update && \
- apt-get install sudo curl -y --allow-downgrades 
- 
-## SETUP Base Pkgs
-sudo DEBIAN_FRONTEND=noninteractive \
- apt-get dist-upgrade -y && \
  apt-get install -y --allow-downgrades \
-    bash-completion grub dialog net-tools \
+    sudo curl bash-completion grub dialog net-tools \
     curl wget vim-nox openssl pv iotop htop \
-    apt-transport-https ca-certificates strace ltrace fail2ban \
-    parted sshfs aufs-tools zfs nfs-common 
-# Install on nfs file server: nfs-kernel-server
+    apt-transport-https ca-certificates fail2ban \
+    parted sshfs aufs-tools zfs nfs-common &&
+ apt-get dist-upgrade -y
+# Note: Install on nfs file server: nfs-kernel-server
 
 if [ ! -d ~/backups/profile ]; then
   # Backup on first run
