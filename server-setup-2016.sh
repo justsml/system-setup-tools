@@ -123,7 +123,9 @@ HEREDOC
 }
 
 function serverSystemTuning () {
+  ## Runs external sysctl.conf tuning script
   curl -sSL https://github.com/justsml/system-setup-tools/raw/master/modules/linux-tuning-high-ram.sh | bash  
+  
   if [ ! -f /etc/init.d/disable-transparent-hugepages ]; then
     ## SETUP MONGODB SYSCTL TUNING ##
     sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
