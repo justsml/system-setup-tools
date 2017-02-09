@@ -36,10 +36,9 @@ DEBIAN_FRONTEND=noninteractive \
  
 ## SETUP Base Pkgs
 sudo DEBIAN_FRONTEND=noninteractive \
- apt-get update && \
  apt-get dist-upgrade -y && \
  apt-get install -y --allow-downgrades \
-    bash-completion dialog net-tools \
+    bash-completion grub dialog net-tools \
     curl wget vim-nox openssl pv iotop htop \
     apt-transport-https ca-certificates strace ltrace fail2ban \
     parted sshfs aufs-tools zfs nfs-common 
