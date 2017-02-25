@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-export  RANCHER_COMPOSE_VERSION=0.12.1 
-export  DOCKER_COMPOSE_VERSION=1.9.0 
-export  DOCKER_VERSION=1.12.5
+export  RANCHER_COMPOSE_VERSION=0.12.2
+export  DOCKER_COMPOSE_VERSION=1.11.2 
+export  DOCKER_VERSION=1.13.1
 
 ### Install binaries ###
 sudo curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz
