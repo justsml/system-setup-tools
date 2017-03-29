@@ -152,10 +152,14 @@ function checkGrubBootConfig () {
 }
 
 function fixDockerSystemd () {
-  if [ "$(grep overlay2 /lib/systemd/system/docker.service)" == "" ]; then
-    grep --color 'ExecStart' /lib/systemd/system/docker.service
-    sudo sed -i 's/^ExecStart=.*$/ExecStart=\/usr\/bin\/dockerd -H fd:\/\/ -s overlay2 --dns 8.8.8.8 --dns 8.8.4.4/' /lib/systemd/system/docker.service
-    grep --color 'ExecStart' /lib/systemd/system/docker.service
+  if [ ! -f /etc/docker/daemon.json ]; then
+    cat << HEREDOC >> /etc/docker/daemon.json
+{
+  "dns_search": "rancher.internal",
+  "dns": ["8.8.8.8", "8.8.4.4"],
+  "storage": "overlay2"
+}
+HEREDOC
   fi
 }
 
