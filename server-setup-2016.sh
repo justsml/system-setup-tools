@@ -156,7 +156,7 @@ function fixDockerSystemd () {
     cat << HEREDOC >> /etc/docker/daemon.json
 {
   "dns": ["8.8.8.8", "8.8.4.4"],
-  "dns-search": "rancher.internal",
+  "dns-search": ["rancher.internal"],
   "storage-driver": "overlay2",
   "max-concurrent-downloads": 16,
   "max-concurrent-uploads": 10
