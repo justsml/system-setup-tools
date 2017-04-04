@@ -153,6 +153,7 @@ function checkGrubBootConfig () {
 }
 
 function fixDockerSystemd () {
+  mkdir -p /etc/docker
   if [ ! -f /etc/docker/daemon.json ]; then
     cat << HEREDOC >> /etc/docker/daemon.json
 {
