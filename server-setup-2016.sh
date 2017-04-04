@@ -25,7 +25,9 @@ mkdir -p \
   /data/drone/var/lib/drone \
   /data/drone/opt/rancher \
   /data/drone/etc/drone \
-  /data/{redis,mongodb,logs,rancher,registry,certs}
+  /data/{redis,mongodb,logs,rancher,registry,certs,clients}
+
+mkdir -p /data/backups/{mysql,rancher,clients}
 
 if [ ! -d /certs ]; then
   ln -sf /data/certs /certs
