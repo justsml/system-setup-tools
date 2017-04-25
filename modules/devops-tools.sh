@@ -22,8 +22,9 @@ function installDockerCompose() {
 }
 
 function installRancherCompose() {
-  sudo curl -sL "https://github.com/rancher/rancher-compose/releases/download/$RANCHER_COMPOSE_VERSION/rancher-compose-linux-amd64-$RANCHER_COMPOSE_VERSION.tar.gz" > /tmp/rancher-compose.tar.gz 
+  sudo curl -sL "https://github.com/rancher/rancher-compose/releases/download/v${RANCHER_COMPOSE_VERSION}/rancher-compose-linux-amd64-v${RANCHER_COMPOSE_VERSION}.tar.gz" -o /tmp/rancher-compose.tar.gz 
   sudo tar --strip-components=1 -xzf /tmp/rancher-compose.tar.gz -C /usr/local/bin 
+  sudo mv /usr/local/bin/rancher-compose-v${RANCHER_COMPOSE_VERSION}/rancher-compose /usr/local/bin/
   sudo chmod +x /usr/local/bin/rancher-compose
 }
 
