@@ -30,17 +30,17 @@ function installRancherCompose() {
 
 
 printf "\n\n\t*** Checking/Installing CLI Client Binaries for Docker & Rancher ***\t\n"
-printf "\nCurrent Version(s):\n"
+printf "\nPre-update Version(s):\n"
 printf "\tDocker:\t\t\t$(docker --version 2>/dev/null)\n"
 printf "\tDocker Compose:\t\t$(docker-compose --version 2>/dev/null)\n"
-printf "\tRancher Compose:\t\t$(rancher-compose --version 2>/dev/null)\n"
+printf "\tRancher Compose:\t$(rancher-compose --version 2>/dev/null)\n"
 printf "===============================\n"
 
 
-printf "\nDocker & Rancher Versions:\n"
+printf "\nUpdated Versions:\n"
 [ "$(which docker)" == "" ]           && installDocker          || printf "\tDocker:\t\t\t$(docker --version 2>&1)\n"
 [ "$(which docker-compose)" == "" ]   && installDockerCompose   || printf "\tDocker Compose:\t\t$(docker-compose --version 2>&1)\n"
-[ "$(which rancher-compose)" == "" ]  && installRancherCompose  || printf "\tRancher Compose:\t\t$(rancher-compose --version 2>&1)\n"
+[ "$(which rancher-compose)" == "" ]  && installRancherCompose  || printf "\tRancher Compose:\t$(rancher-compose --version 2>&1)\n"
 printf "===============================\n\n"
 
 
