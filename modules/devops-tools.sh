@@ -4,7 +4,7 @@ set -e
 ## Installs CLI Client Binaries for common DevOps tools.
 ## For Linux & OSX. 
 
-export  RANCHER_COMPOSE_VERSION=0.12.2
+export  RANCHER_COMPOSE_VERSION=0.12.4
 export  DOCKER_COMPOSE_VERSION=1.11.2 
 export  DOCKER_VERSION=1.13.1
 
