@@ -193,4 +193,6 @@ if [ -z "$ZSH" ]; then
   export PS1="${reset}${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$${reset} "
 fi
 
+export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
+
 ### === END DAN'S ALIASES === ###
