@@ -65,6 +65,7 @@ fi
 
 # ** List paths
 alias paths='echo -e ${PATH//:/\\n}'
+alias paths-summary='echo -e ${PATH//:/\\n} | sort | uniq'
 
 # *** Extend gnu cmds
 alias ll='ls -lach'
