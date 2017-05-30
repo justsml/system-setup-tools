@@ -50,14 +50,13 @@ alias logm='sudo tail -500f /var/log/messages'
 # alias logk='sudo tail -500f /var/log/kern.log'
 
 # ** List all IP addresses (see netspy & netlisteners helpers below)
+alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\t -f2 | sed 's/[^0-9\.]*//g'"
 if [[ "$OSX" == "true" ]]; then
-  alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2"
   # *** See port status
   alias ports-all='lsof -Pn -i4'
   alias ports-open='lsof -Pn -i4 | grep LISTEN'
   alias ports-active='lsof -Pn -i4 | grep ESTABLISHED'
 else
-  alias ips="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print $2}' | sed s/addr://"
   # *** See port status
   alias ports-all='netstat -pawnt'
   alias ports-open='netstat -pawnt | grep LISTEN'
