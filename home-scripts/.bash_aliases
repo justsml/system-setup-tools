@@ -41,7 +41,7 @@ else
 fi
 
 # *** Brings harmony to the lands
-alias node='node --harmony '
+# alias node='node --harmony '
 
 # ** monitor logs
 alias loga='sudo tail -500f /var/log/auth.log'
