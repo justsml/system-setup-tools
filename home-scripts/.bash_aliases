@@ -32,7 +32,7 @@ if [ -f "$(which chkconfig 2>/dev/null)" ]; then
   alias service-list="chkconfig --list | grep '3:on'"
   alias services-all="chkconfig --list | grep '3:on'"
 fi
-if [[ $KERNEL_NAME =~ ^"Darwin" ]]; then
+if [[ $OSX == "true" ]]; then
   alias service-list="echo 'Haha, good luck with launchctl'"
   alias services-all="echo 'Haha, good luck with launchctl'"
 else
@@ -157,21 +157,12 @@ function init_term_cmds () {
 
   # osx's termcap doesn't have italics. The below adds support for iTerm2
   # and is harmless on Terminal.app
-  if [ "$(get_platform)" == "osx" ]; then
+  if [[ $OSX == "true" ]]; then
     italic=$(echo -e "\033[3m")
     eitalic=$(echo -e "\033[23m")
   fi
   
   export back black blue bold cyan default eitalic green italic magenta onblue ongrey red reset under white yellow
-}
-
-function get_platform () {
-  case `uname -s` in
-    Darwin) echo "osx"    ;;
-    Linux)  echo "linux"  ;;
-    SunOS)  echo "sunos"  ;;
-    *)      echo "common" ;;
-  esac
 }
 
 ## Run this town... code!
@@ -182,7 +173,7 @@ if [ -f "$(which tput)" ]; then
 fi
 
 if [ -z "$ZSH" ]; then
-  # PS1='\[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
+  # PS1='[\e[1;31m\]Staging2 \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;32m\] '
   # export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
   export PS1_BACKUP=$PS1
   if [ "$UID" == "0" ]; then
@@ -193,6 +184,10 @@ if [ -z "$ZSH" ]; then
   export PS1="${reset}${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$${reset} "
 fi
 
-export PS1="\[\e[31m\]\H \[\e[m\] \[\e[32m\]\u\[\e[m\]\[\e[37m\]@\[\e[m\]\[\e[33m\]\h\[\e[m\]: \[\e[36m\]\w\[\e[m\]\\$ "
+if [ "$UID" == "0" ]; then
+  export PS1="\[\e[31m\]\u\[\e[m\] @ \[\e[33m\]\H\[\e[m\]\[\e[37m\]: \[\e[36m\]\w\[\e[m\] # "
+else 
+  export PS1="\[\e[36m\]\u\[\e[m\] @ \[\e[37m\]\H\[\e[m\]\[\e[37m\]: \[\e[32m\]\w\[\e[m\] $ "
+fi
 
 ### === END DAN'S ALIASES === ###
