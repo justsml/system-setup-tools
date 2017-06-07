@@ -9,9 +9,11 @@
 # Source: https://github.com/justsml/system-setup-tools/edit/master/home-scripts/.bash_aliases
 # Note: Must be added to run from your profile/rc script `.bashrc` or `.profile` or whatever your OS uses.
 #############################################
-# INSTALL: (append both init & aliases to existing)
+# INSTALL: (APPEND both init & aliases to existing)
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
+# OVERWRITE:
+# 
 ## ADVANCED: INSTALL BY FORCE - DONT DO THIS UNLESS YOU'VE READ THE SCRIPTS
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc > ~/.bashrc && curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases > ~/.bash_aliases
 
@@ -65,7 +67,11 @@ fi
 
 # ** List paths
 alias paths='echo -e ${PATH//:/\\n}'
+alias paths-sorted='echo -e ${PATH//:/\\n} | sort'
+alias paths-deduped='echo -e ${PATH//:/\\n} | uniq'
 alias paths-summary='echo -e ${PATH//:/\\n} | sort | uniq'
+# *** Find all files matched in any path folder
+alias pathsfinder='which -a $1'
 
 # *** Extend gnu cmds
 alias ll='ls -lach'
@@ -102,7 +108,10 @@ alias hs='history | grep --color=auto'
 alias hsx='history | egrep --color=auto'
 alias netlisteners='lsof -i -P | grep LISTEN'
 #identify and search for active network connections
-# netspy() { lsof -i -P +c 0 +M | grep -i "$1" }
+alias netspy='lsof -i -P +c 0 +M | grep -i "$1"'
+# remove leading & trailing spaces
+alias trim="awk '{\$1=\$1};1'"
+
 # Extract almost any compressed format
 # extractall () {
 #   if [ -f $1 ] ; then
@@ -181,13 +190,13 @@ if [ -z "$ZSH" ]; then
   else
     user_color=$green
   fi
-  export PS1="${reset}${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$${reset} "
+  #export PS1="${reset}${yellow}\H${white}@${user_color}\u${white}: ${cyan}\w${white}\$${reset} "
+  if [ "$UID" == "0" ]; then
+    export PS1="\[\e[31m\]\u\[\e[m\] @ \[\e[33m\]\H\[\e[m\]\[\e[37m\]: \[\e[36m\]\w\[\e[m\] \[\e[31m\]#>\[\e[m\] "
+  else 
+    export PS1="\[\e[36m\]\u\[\e[m\] @ \[\e[37m\]\H\[\e[m\]\[\e[37m\]: \[\e[32m\]\w\[\e[m\] \$ "
+  fi
 fi
 
-if [ "$UID" == "0" ]; then
-  export PS1="\[\e[31m\]\u\[\e[m\] @ \[\e[33m\]\H\[\e[m\]\[\e[37m\]: \[\e[36m\]\w\[\e[m\] # "
-else 
-  export PS1="\[\e[36m\]\u\[\e[m\] @ \[\e[37m\]\H\[\e[m\]\[\e[37m\]: \[\e[32m\]\w\[\e[m\] $ "
-fi
 
 ### === END DAN'S ALIASES === ###
