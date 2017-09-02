@@ -15,7 +15,7 @@ function check_options () {
   [ "$(grep '^\s*set hlsearch' ~/.vimrc)" == "" ] && echo 'set hlsearch' >> ~/.vimrc || echo "search highlighting already enabled"
 
   if [ "$(grep '^\s*nnoremap .F2.' ~/.vimrc)" == "" ]; then
-    echo '# Set F2 to toggle paste mode' >> ~/.vimrc
+    # echo '# Set F2 to toggle paste mode' >> ~/.vimrc
     echo 'nnoremap <F2> :set invpaste paste?<CR>' >> ~/.vimrc
     echo 'set pastetoggle=<F2>' >> ~/.vimrc
     echo 'set showmode' >> ~/.vimrc    
