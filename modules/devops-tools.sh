@@ -5,7 +5,7 @@ set -e
 ## For Linux & OSX. 
 
 export  RANCHER_COMPOSE_VERSION=0.12.5
-export  DOCKER_COMPOSE_VERSION=1.11.2 
+export  DOCKER_COMPOSE_VERSION=1.15.0 
 export  DOCKER_VERSION=1.13.1
 
 ### Install/copy CLI binaries ###
