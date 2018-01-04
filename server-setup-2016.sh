@@ -11,6 +11,8 @@ set -x
 # USAGE:
 # curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/server-setup-2016.sh | bash
 
+export DEBIAN_FRONTEND=noninteractive
+
 ###################
 #### NOTE TO USERS: PLEASE UPDATE THE NEXT BIT WITH YOUR PUBLIC KEY(S)
 ## Adding Keys - see http://www.danlevy.net/cloud-config.yml
