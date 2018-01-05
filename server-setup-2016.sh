@@ -9,7 +9,7 @@ set -x
 
 # This is for the cloud! (and cloud-like things)
 # USAGE:
-# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/server-setup-2016.sh | bash
+# curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/server-setup-2016.sh | sudo bash
 
 export DEBIAN_FRONTEND=noninteractive
 
