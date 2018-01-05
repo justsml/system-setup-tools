@@ -38,12 +38,12 @@ fi
 # Add Required Packages
 DEBIAN_FRONTEND=noninteractive \
  apt-get update && \
- apt-get install -y --allow-downgrades \
+ apt-get install -yq --allow-downgrades \
     sudo curl bash-completion grub dialog net-tools \
     curl wget vim-nox openssl pv iotop htop \
     apt-transport-https ca-certificates fail2ban \
     parted sshfs aufs-tools zfs nfs-common &&
- apt-get dist-upgrade -y
+ apt-get dist-upgrade -yq
 # Note: Install on nfs file server: nfs-kernel-server
 
 if [ ! -d ~/backups/profile ]; then
