@@ -6,7 +6,7 @@ brew install coreutils
 # key commands
 brew install binutils
 brew install diffutils
-brew install ed --default-names
+brew install ed --with-default-names
 brew install findutils --with-default-names
 brew install gawk
 brew install gnu-indent --with-default-names
@@ -23,7 +23,7 @@ brew install wget
 
 # OS X ships a GNU version, but too old
 brew install bash
-brew install emacs
+#brew install emacs
 brew install gdb  # gdb requires further actions to make it work. See `brew info gdb`.
 brew install gpatch
 brew install m4
