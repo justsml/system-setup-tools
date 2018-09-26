@@ -9,7 +9,7 @@ xcode-select --install
 echo "DONE: Installing XCode Command Line Tools\!"
 
 
-# install homebrew
+# (re-)install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew install zsh
@@ -18,7 +18,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 # change to use zsh
 chsh -s /bin/zsh
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -37,19 +37,25 @@ echo "Next: Installing NodeJS v8.x.x\!"
 nvm install 8
 sleep 5s
 
+# setup postgresql server
+brew install postgresql@9.6
+brew services start postgresql
+
+## Install common dev/http server
+npm install -g nodemon http-server lite-server
 
 echo "Next: Installing Dev, Linux & GNU Utils\!"
 sleep 5s
-brew tap homebrew/versions
+# brew tap homebrew/versions
 brew install git
 brew install wget
 brew install coreutils
 brew install binutils
 brew install diffutils
-brew install ed --with-default-names
+# brew install ed --with-default-names
 brew install findutils --with-default-names
 brew install gawk
-brew install gnu-indent --with-default-names
+# brew install gnu-indent --with-default-names
 brew install gnu-sed --with-default-names
 brew install gnu-tar --with-default-names
 brew install gnu-which --with-default-names
@@ -60,11 +66,6 @@ brew install screen
 brew install watch
 brew install make
 brew install nano
-
-brew install postgresql@9.6
-brew services start postgresql
-
-npm install -g nodemon http-server eslint prettier
 
 # misc
 # brew install adium
