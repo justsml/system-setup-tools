@@ -79,12 +79,12 @@ brew install nano
 # brew install filezilla
 # brew install imagealpha
 # brew install imageoptim
-brew install iterm2
+# brew install iterm2
 # brew install livereload
-brew install macvim
+brew install vim
 # brew install sequel-pro
 brew install virtualbox
-brew install vagrant
+# brew install vagrant
 
 # utils
 # brew install divvy
@@ -114,6 +114,22 @@ fi
 if [ ! -f $HOME/.ssh/id_rsa ]; then
   echo -e "\n" | ssh-keygen -o -b 2048 -t rsa -a 2000 -N "" &> /dev/null
 fi
+
+
+### IMPORTANT FOR DEVS ###
+# Expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+# Disable smart quotes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+# Disable smart dashes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+# Expand print panel by default
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+
+
 
 # enable web inspector in safari
 defaults write "bundle-identifier-here" WebKitDeveloperExtras -bool true
@@ -155,14 +171,6 @@ defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
 
 # Increase window resize speed for Cocoa applications
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
-
-# Expand save panel by default
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
-
-# Expand print panel by default
-defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
-defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
@@ -212,12 +220,6 @@ defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 # Disable Notification Center and remove the menu bar icon
 launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
-
-# Disable smart quotes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-
-# Disable smart dashes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 # Disable local Time Machine snapshots
 sudo tmutil disablelocal
