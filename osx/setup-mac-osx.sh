@@ -19,9 +19,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 # change to use zsh
 chsh -s /bin/zsh
 
-## IMPORTANT: CLOSE & REOPEN TERMINAL WINDOW/TAB(s)
-
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -36,12 +34,12 @@ if [ "$(grep NVM_DIR $HOME/.bashrc)" == "" ]; then
   printf "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" # This loads nvm\n" >> $HOME/.bashrc
 fi
 
-echo "Next: Installing NodeJS v10.x.x\!"
-nvm install 10
+echo "Next: Installing NodeJS v12.x.x\!"
+nvm install 12
 sleep 5s
 
 # setup postgresql server
-brew install postgresql@9.6
+brew install postgresql@10
 brew services start postgresql
 
 ## Install common dev/http server
