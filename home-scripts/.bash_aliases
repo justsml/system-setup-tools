@@ -99,10 +99,10 @@ alias dud3='du -d 3 -h -c -x' # Sums 3 folder deep, same fs
 alias cls='clear'
 
 # Kill proccesses using common dev ports
-kill3000='lsof -P -i :3000 | grep LISTEN | awk '{print $2}' | xargs kill '
-kill5000='lsof -P -i :5000 | grep LISTEN | awk '{print $2}' | xargs kill '
-kill8000='lsof -P -i :8000 | grep LISTEN | awk '{print $2}' | xargs kill '
-kill8080='lsof -P -i :8080 | grep LISTEN | awk '{print $2}' | xargs kill '
+alias kill3000='lsof -P -i :3000 | grep LISTEN | awk "{print $2}" | xargs kill '
+alias kill5000='lsof -P -i :5000 | grep LISTEN | awk "{print $2}" | xargs kill '
+alias kill8000='lsof -P -i :8000 | grep LISTEN | awk "{print $2}" | xargs kill '
+alias kill8080='lsof -P -i :8080 | grep LISTEN | awk "{print $2}" | xargs kill '
 
 #>>>> Recovered from http://alias.sh
 #List top ten largest files/directories in current directory
