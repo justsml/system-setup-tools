@@ -1,5 +1,6 @@
 #!/bin/bash
-## v1.2.1
+## v1.3.0
+## 2019-09-25
 
 ## To Debug:
 # set -x
@@ -36,7 +37,7 @@ if [ -f "$(which chkconfig 2>/dev/null)" ]; then
   alias services-all="chkconfig --list | grep '3:on'"
 fi
 if [[ $OSX == "true" ]]; then
-  alias service-list="echo 'Haha, good luck with launchctl'"
+  alias service-list="brew services list"
   alias services-all="echo 'Haha, good luck with launchctl'"
 else
   alias service-list="service --status-all"
@@ -165,7 +166,6 @@ function init_term_cmds () {
       magenta=$(  tput setaf 5 || tput AF 5    2>/dev/null)
       cyan=$(     tput setaf 6 || tput AF 6    2>/dev/null)
       white=$(    tput setaf 7 || tput AF 7    2>/dev/null)
-
       onblue=$(   tput setab 4 || tput AB 4    2>/dev/null)
       ongrey=$(   tput setab 7 || tput AB 7    2>/dev/null)
     fi
