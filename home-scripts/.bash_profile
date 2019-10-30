@@ -25,6 +25,10 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+
 # enable the "z" command
-. `brew --prefix`/etc/profile.d/z.sh
+# . `brew --prefix`/etc/profile.d/z.sh
 
