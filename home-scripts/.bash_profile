@@ -32,3 +32,6 @@ fi
 # enable the "z" command
 # . `brew --prefix`/etc/profile.d/z.sh
 
+# Default to local profile install
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
