@@ -1,6 +1,6 @@
 #!/bin/bash
-## v1.3.0
-## 2019-09-25
+## v1.3.3
+## 2019-11-25
 
 ## To Debug:
 # set -x
@@ -119,6 +119,11 @@ alias netlisteners='lsof -i -P | grep LISTEN'
 alias netspy='lsof -i -P +c 0 +M | grep -i "$1"'
 # remove leading & trailing spaces
 alias trim="awk '{\$1=\$1};1'"
+
+#### Fix default behavior of git output (see cmd defined in $PAGER)
+# export LESS='-R -X --long-prompt --quit-if-one-screen'
+#### git & less terminal UX fixes
+export PAGER='less -R -X --long-prompt --quit-if-one-screen'
 
 # Extract almost any compressed format
 # extractall () {
